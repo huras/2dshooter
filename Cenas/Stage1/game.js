@@ -436,8 +436,8 @@ class GameEngine {
     this.stageBuilder = new ChallengeDynamicBuilder({
       currentSpeed: 1,
       speedStep: 0.15,
-      param1Range: [1, 1, 1, 1, 1, 2, 1, 2],
-      param2Range: [1, 2, 3, 4, 5, 6, 7],
+      param1Range: [3, 2, 4, 3, 1, 3],
+      param2Range: [2, 9, 1, 4, 8, 1],
       currentCheckpoints: initialCheckpoints,
       currentCheckpointCount: 0,
       chooseNextChallenge: () => {
@@ -745,7 +745,7 @@ class GameEngine {
     this.crystalCounter = new HUDCounter(5, 'txt_qtd-moedas');
     this.frag = new FragManager();
     this.heartHUD = new HeartHUD(5, ['#vida1', '#vida2', '#vida3', '#vida4', '#vida5'], args => { onGameOver() }, 5); // this.heartHUD = new HeartHUD(3, ['#vida1', '#vida2', '#vida3']);
-    this.acertosHUD = new AcertosHUD('.q-slot', 5, () => { this.onWinGame(); })
+    this.acertosHUD = new AcertosHUD('.q-slot', 0, () => { this.onWinGame(); })
     this.rocketCounterHUD = new RocketCounterHUD('#rocket-counter', 3); //Contador regressivo
 
     // === Eventos importantes no jogo
