@@ -255,48 +255,44 @@ class GameEngine {
     // === Set Layout
     this.ceu = new BGGradiente([
       {
-        keyframe: 0, // 100 duration
+        firstFrame: true,
+        keyframe: 0,
         points: [
-          { id: 0, color: { r: 255, g: 255, b: 255 }, position: 0 },
-          { id: 1, color: { r: 249, g: 230, b: 167 }, position: 0.0001 },
-          { id: 2, color: { r: 238, g: 150, b: 126 }, position: 0.0002 },
-          { id: 3, color: { r: 107, g: 102, b: 125 }, position: 0.0003 },
-
-          { id: 4, color: { r: 0, g: 30, b: 161 }, position: 0.001 },
-          { id: 5, color: { r: 0, g: 72, b: 96 }, position: 0.02 },
-          { id: 6, color: { r: 103, g: 201, b: 213 }, position: 0.04 },
-          { id: 7, color: { r: 0, g: 21, b: 43 }, position: 0.06 },
-          { id: 8, color: { r: 25, g: 1, b: 39 }, position: 1 },
+          { id: 0, color: { r: 251, g: 29, b: 128 }, position: 0 },
+          { id: 1, color: { r: 246, g: 33, b: 137 }, position: 0.33 },
+          { id: 2, color: { r: 220, g: 35, b: 147 }, position: 1 },
         ]
       },
       {
-        keyframe: 2000, // 1000 duration
+        keyframe: 100,
         points: [
-          { id: 0, color: { r: 255, g: 255, b: 255 }, position: 0 },
-          { id: 1, color: { r: 0, g: 130, b: 161 }, position: 0.0001 },
-          { id: 2, color: { r: 0, g: 130, b: 161 }, position: 0.0002 },
-          { id: 3, color: { r: 0, g: 130, b: 161 }, position: 0.0003 },
-
-          { id: 4, color: { r: 0, g: 130, b: 61 }, position: 0.001 },
-          { id: 5, color: { r: 70, g: 72, b: 96 }, position: 0.002 },
-          { id: 6, color: { r: 103, g: 201, b: 213 }, position: 0.004 },
-          { id: 7, color: { r: 0, g: 21, b: 43 }, position: 0.006 },
-          { id: 8, color: { r: 40, g: 40, b: 40 }, position: 1 },
+          { id: 0, color: { r: 206, g: 35, b: 171 }, position: 0 },
+          { id: 1, color: { r: 197, g: 34, b: 197 }, position: 0.33 },
+          { id: 2, color: { r: 196, g: 34, b: 206 }, position: 1 },
         ]
       },
       {
-        keyframe: 4000, // 1000 duration
+        keyframe: 500,
         points: [
-          { id: 0, color: { r: 255, g: 255, b: 255 }, position: 0 },
-          { id: 1, color: { r: 0, g: 130, b: 161 }, position: 0.0001 },
-          { id: 2, color: { r: 0, g: 130, b: 161 }, position: 0.0002 },
-          { id: 3, color: { r: 30, g: 30, b: 71 }, position: 0.0003 },
-
-          { id: 4, color: { r: 0, g: 130, b: 161 }, position: 0.001 },
-          { id: 5, color: { r: 0, g: 72, b: 96 }, position: 0.002 },
-          { id: 6, color: { r: 63, g: 201, b: 213 }, position: 0.004 },
-          { id: 7, color: { r: 30, g: 21, b: 43 }, position: 0.006 },
-          { id: 8, color: { r: 0, g: 0, b: 0 }, position: 1 },
+          { id: 0, color: { r: 218, g: 36, b: 233 }, position: 0 },
+          { id: 1, color: { r: 205, g: 31, b: 247 }, position: 0.33 },
+          { id: 2, color: { r: 188, g: 35, b: 237 }, position: 1 },
+        ]
+      },
+      {
+        keyframe: 3000,
+        points: [
+          { id: 0, color: { r: 187, g: 34, b: 239 }, position: 0 },
+          { id: 1, color: { r: 110, g: 93, b: 137 }, position: 0.33 },
+          { id: 2, color: { r: 66, g: 54, b: 81 }, position: 1 },
+        ]
+      },
+      {
+        keyframe: 5000,
+        points: [
+          { id: 0, color: { r: 32, g: 26, b: 42 }, position: 0 },
+          { id: 1, color: { r: 5, g: 5, b: 11 }, position: 0.33 },
+          { id: 2, color: { r: 1, g: 1, b: 1 }, position: 1 },
         ]
       },
     ], this.canvas, this.ctx);
@@ -439,8 +435,8 @@ class GameEngine {
     this.stageBuilder = new ChallengeDynamicBuilder({
       currentSpeed: 1,
       speedStep: 0.15,
-      param1Range: [3, 5, 5, 4, 4, 4, 5, 5],
-      param2Range: [4, 6, 7, 8, 5, 9],
+      param1Range: [7, 5, 6, 7, 5, 6],
+      param2Range: [4, 9, 8, 8, 5, 9],
       currentCheckpoints: initialCheckpoints,
       currentCheckpointCount: 0,
       chooseNextChallenge: () => {
