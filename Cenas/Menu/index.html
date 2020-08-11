@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title> Roletas </title>
+</head>
+<style>
+  body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      margin: 0;
+    }
+
+    canvas {
+      width: calc(100vw);
+      height: calc(100vh);
+    }
+  }
+</style>
+
+<body>
+  <!-- <script src="../../src/Utils.js"></script>
+  <script src="../../src/Physics.js"></script>
+  <script src="../../src/SheetLoader.js"></script>
+  <script src="../../src/CanvasInterface.js"></script>
+  <script src="../../src/InputManager.js"></script>
+  <script src="../../src/TxtReader.js"></script>
+  <script src="../../src/ShipLayoutReader.js"></script>
+  <script src="../../src/EstruturasDoJogo.js"></script> -->
+
+  <script src="../../src/babel/Utils.js"></script>
+  <script src="../../src/babel/Physics.js"></script>
+  <script src="../../src/babel/SheetLoader.js"></script>
+  <script src="../../src/babel/CanvasInterface.js"></script>
+  <script src="../../src/babel/InputManager.js"></script>
+  <script src="../../src/babel/TxtReader.js"></script>
+  <script src="../../src/babel/ShipLayoutReader.js"></script>
+  <script src="../../src/babel/EstruturasDoJogo.js"></script>
+
+  <!-- <audio preload="automatic" id="SFX-roleta-rodando">
+    <source src="./audio/SFX_roleta-rodando.mp3" type="audio/mp3" />
+  </audio> -->
+  <link rel="stylesheet" href="../../css/HUD.css">
+
+  <div class='interactableHUD'>
+
+    <div class='menu-screen'>
+      <div class='sol-position'>
+        <img class='sol noInteraction' src="../../img/ui/sol2.png">
+      </div>
+      <img class='titulo' src="../../img/ui/title.png">
+      <div class='acoes'>
+        <div class='botao' onclick="loadNewScene('./Cenas/Stage1', 'portrait-primary')">
+          <img class='btn-inicio' src="../../img/ui/ButtonAzul.png">
+          <span class='lbl'> Iniciar </span>
+        </div>
+
+        <div style='margin-bottom: 32px;'></div>
+
+        <div class='botao' style='transform: scale(0.7);' onclick="instrucoes(1)">
+          <img class='btn-instrucoes' src="../../img/ui/ButtonRoxo.png">
+          <span class='lbl'> Instruções </span>
+        </div>
+      </div>
+      <small class='meta-info-game'> - Tabuada de 1 e 2 - </small>
+    </div>
+
+    <div class='instruction-page1-screen instruction-screen' style='display: none;'>
+      <img src="../../img/instructions/pag1-B.png" style='max-width: 95%;'>
+
+      <div class='dflex flex-column' style='position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);'>
+        <div class='dflex'>
+          <button class='retornar-btn btn-laranjado dflex' onclick="instrucoes(0)">
+            <img src="../../img/ui/hand-point-right-solid.svg"
+              style='transform: scaleX(-1); height: 25px; margin-right: 8px'>
+            <span> MENU </span>
+          </button>
+
+          <button class='retornar-btn btn-laranjado dflex' onclick="instrucoes(2)">
+            <img src="../../img/ui/hand-point-right-solid.svg" style='height: 25px; margin-right: 8px;'>
+            <span> PRÓXIMO </span>
+          </button>
+        </div>
+      </div>
+      <img onclick="instrucoes(0)" src="../../img/ui/times-circle-solid.svg"
+        style='height: 35px; position: fixed; right: 8px; top: 8px;'>
+      <div style='position: fixed; right: 46%; top: 8px; transform: translateX(-50%);'> 1/3 </div>
+    </div>
+
+    <div class='instruction-page2-screen instruction-screen' style='display: none;'>
+      <img src="../../img/instructions/pag1-A.png" style='max-width: 95%;'>
+
+      <div class='dflex flex-column' style='position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);'>
+        <div class='dflex'>
+          <button class='retornar-btn btn-laranjado dflex' onclick="instrucoes(1)">
+            <img src="../../img/ui/hand-point-right-solid.svg"
+              style='transform: scaleX(-1); height: 25px; margin-right: 8px'>
+            <span> VOLTAR </span>
+          </button>
+
+          <button class='retornar-btn btn-laranjado dflex' onclick="instrucoes(3)">
+            <img src="../../img/ui/hand-point-right-solid.svg" style='height: 25px; margin-right: 8px;'>
+            <span> PRÓXIMO </span>
+          </button>
+        </div>
+      </div>
+      <img onclick="instrucoes(0)" src="../../img/ui/times-circle-solid.svg"
+        style='height: 35px; position: fixed; right: 8px; top: 8px;'>
+      <div style='position: fixed; right: 46%; top: 8px; transform: translateX(-50%);'> 2/3 </div>
+    </div>
+
+    <div class='instruction-page3-screen instruction-screen' style='display: none;'>
+      <img src="../../img/instructions/pag2-A.png" style='max-width: 95%;'>
+
+      <div class='dflex flex-column' style='position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);'>
+        <div class='dflex'>
+          <button class='retornar-btn btn-laranjado dflex' onclick="instrucoes(2)">
+            <img src="../../img/ui/hand-point-right-solid.svg"
+              style='transform: scaleX(-1); height: 25px; margin-right: 8px'>
+            <span> VOLTAR </span>
+          </button>
+
+          <button class='retornar-btn btn-laranjado dflex' onclick="instrucoes(0)">
+            <img src="../../img/ui/hand-point-right-solid.svg" style='height: 25px; margin-right: 8px;'>
+            <span> MENU </span>
+          </button>
+        </div>
+      </div>
+      <img onclick="instrucoes(0)" src="../../img/ui/times-circle-solid.svg"
+        style='height: 35px; position: fixed; right: 8px; top: 8px;'>
+      <div style='position: fixed; right: 46%; top: 8px; transform: translateX(-50%);'> 3/3 </div>
+    </div>
+
+  </div>
+
+  <div class='noInteractionHUD'>
+    <div>
+      <!-- Vazio -->
+    </div>
+
+    <canvas id='canvas'></canvas>
+
+    <!-- <audio preload="automatic" id="OST-naka" muted>
+    <source src="../../audio/ostNaka.mp3" type="audio/mp3" />
+  </audio> -->
+
+    <script src="transpiled.js"></script>
+    <!-- <script src="menu.js"></script> -->
+</body>
+
+</html>
