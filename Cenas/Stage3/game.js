@@ -307,7 +307,7 @@ class GameEngine {
       amount: 45,
       maxWidth: 100,
       generationParams: {
-        scale: { min: 0.1, max: 0.7 },
+        scale: { min: 0.05, max: 0.25 },
         rotation: { min: -3, max: 3 },
         images: [estrela],
       },
@@ -335,7 +335,7 @@ class GameEngine {
         item.scale = (randomInt(5, 55) / 100) * (params.scale.max - params.scale.min) + params.scale.min;
         item.rotation = (randomInt(0, 100) / 100) * (params.rotation.max - params.rotation.min) + params.rotation.min;
         item.image = params.images[0];
-        item.alpha = (randomInt(1, 45) / 100) * (1 - item.scale / params.scale.max) + 0.01;
+        item.alpha = 1;
         item.speed = {
           x: ((randomInt(0, 200) - 100) / 100) * 0.25 * (0.9 * item.scale),
           y: (randomInt(75, 100) / 100) * (0.9 * item.scale)
@@ -353,7 +353,7 @@ class GameEngine {
       item.scale = (randomInt(5, 55) / 100) * (params.scale.max - params.scale.min) + params.scale.min;
       item.rotation = (randomInt(0, 100) / 100) * (params.rotation.max - params.rotation.min) + params.rotation.min;
       item.image = params.images[0];
-      item.alpha = (randomInt(1, 45) / 100) * (1 - item.scale / params.scale.max) + 0.01;
+      item.alpha = 1;
       item.speed = {
         x: ((randomInt(0, 200) - 100) / 100) * 0.25 * (0.9 * item.scale),
         y: (randomInt(75, 100) / 100) * (0.9 * item.scale)
@@ -426,20 +426,20 @@ class GameEngine {
 
     const initialCheckpoints = {
       // param1: 2,
-      // operation: 'x',
       // param2: 2,
-      // readyToBeSolved: '=',
+      operation: 'x',
+      readyToBeSolved: '=',
 
       param1: false,
-      operation: false,
       param2: false,
-      readyToBeSolved: false
+      // operation: false,
+      // readyToBeSolved: false
     }
 
     this.stageBuilder = new ChallengeDynamicBuilder({
       currentSpeed: 1,
       speedStep: 0.15,
-      param1Range: [4, 5, 3, 4, 5, 4], // Na fase 3 o barato é louco
+      param1Range: [3, 5, 5, 4, 4, 4, 5, 5],
       param2Range: [4, 6, 7, 8, 5, 9],
       currentCheckpoints: initialCheckpoints,
       currentCheckpointCount: 0,

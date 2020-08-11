@@ -319,7 +319,7 @@ class GameEngine {
       amount: 25,
       maxWidth: 100,
       generationParams: {
-        scale: { min: 0.2, max: 0.6 },
+        scale: { min: 0.05, max: 0.25 },
         rotation: { min: -3, max: 3 },
         images: [estrela],
       },
@@ -347,7 +347,7 @@ class GameEngine {
         item.scale = (randomInt(5, 55) / 100) * (params.scale.max - params.scale.min) + params.scale.min;
         item.rotation = (randomInt(0, 100) / 100) * (params.rotation.max - params.rotation.min) + params.rotation.min;
         item.image = params.images[0];
-        item.alpha = (randomInt(1, 45) / 100) * (1 - item.scale / params.scale.max) + 0.01;
+        item.alpha = 1;
         item.speed = {
           x: ((randomInt(0, 200) - 100) / 100) * 0.25 * (0.9 * item.scale),
           y: (randomInt(75, 100) / 100) * (0.9 * item.scale)
@@ -365,7 +365,7 @@ class GameEngine {
       item.scale = (randomInt(5, 55) / 100) * (params.scale.max - params.scale.min) + params.scale.min;
       item.rotation = (randomInt(0, 100) / 100) * (params.rotation.max - params.rotation.min) + params.rotation.min;
       item.image = params.images[0];
-      item.alpha = (randomInt(1, 45) / 100) * (1 - item.scale / params.scale.max) + 0.01;
+      item.alpha = 1;
       item.speed = {
         x: ((randomInt(0, 200) - 100) / 100) * 0.25 * (0.9 * item.scale),
         y: (randomInt(75, 100) / 100) * (0.9 * item.scale)
@@ -451,7 +451,7 @@ class GameEngine {
     this.stageBuilder = new ChallengeDynamicBuilder({
       currentSpeed: 1,
       speedStep: 0.15,
-      param1Range: [3, 5, 4, 3, 4, 5],
+      param1Range: [4, 5, 3, 3, 4, 3, 4], // Na fase 3 o barato é louco
       param2Range: [9, 4, 3, 6, 8, 5],
       currentCheckpoints: initialCheckpoints,
       currentCheckpointCount: 0,
