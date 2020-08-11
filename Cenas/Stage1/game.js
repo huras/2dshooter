@@ -772,7 +772,7 @@ class GameEngine {
     this.crystalCounter = new HUDCounter(5, 'txt_qtd-moedas');
     this.frag = new FragManager();
     this.heartHUD = new HeartHUD(5, ['#vida1', '#vida2', '#vida3', '#vida4', '#vida5'], args => { onGameOver() }, 5); // this.heartHUD = new HeartHUD(3, ['#vida1', '#vida2', '#vida3']);
-    this.acertosHUD = new AcertosHUD('.q-slot', 5, () => { this.onWinGame(); })
+    this.acertosHUD = new AcertosHUD('.q-slot', 0, () => { this.onWinGame(); })
     this.rocketCounterHUD = new RocketCounterHUD('#rocket-counter', 3); //Contador regressivo
 
     // === Eventos importantes no jogo
