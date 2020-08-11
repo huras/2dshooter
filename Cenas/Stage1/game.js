@@ -422,15 +422,15 @@ class GameEngine {
     });
 
     const initialCheckpoints = {
-      // param1: 1,
-      // operation: 'x',
-      // param2: 1,
-      // readyToBeSolved: '=',
+      param1: 1,
+      operation: 'x',
+      param2: 1,
+      readyToBeSolved: '=',
 
-      param1: false,
-      operation: false,
-      param2: false,
-      readyToBeSolved: false
+      // param1: false,
+      // operation: false,
+      // param2: false,
+      // readyToBeSolved: false
     }
 
     this.stageBuilder = new ChallengeDynamicBuilder({
@@ -567,7 +567,8 @@ class GameEngine {
               candidates.push(param1 + param2);
               candidates.push(Math.abs(param1 - param2));
               candidates.push(Math.floor(param1 + (param2 * 1.5)));
-              candidates.push(randomInt(3, 5));
+              if (param2 == param1)
+                candidates.push(randomInt(3, 5));
               candidates.map(c => {
                 if (c == 0)
                   c = 1;
@@ -741,10 +742,10 @@ class GameEngine {
     this.layoutManager.readChallenges();
 
     // === Set HUD
-    this.crystalCounter = new HUDCounter(0, 'txt_qtd-moedas');
+    this.crystalCounter = new HUDCounter(5, 'txt_qtd-moedas');
     this.frag = new FragManager();
     this.heartHUD = new HeartHUD(5, ['#vida1', '#vida2', '#vida3', '#vida4', '#vida5'], args => { onGameOver() }, 5); // this.heartHUD = new HeartHUD(3, ['#vida1', '#vida2', '#vida3']);
-    this.acertosHUD = new AcertosHUD('.q-slot', 0, () => { this.onWinGame(); })
+    this.acertosHUD = new AcertosHUD('.q-slot', 5, () => { this.onWinGame(); })
     this.rocketCounterHUD = new RocketCounterHUD('#rocket-counter', 3); //Contador regressivo
 
     // === Eventos importantes no jogo

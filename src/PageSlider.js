@@ -13,10 +13,17 @@ var historico = [
   }
 ];
 
+var loadedData = {
+  crystals: 0,
+}
+
 // Gerencia histórico
-var loadNewScene = (url, rotation, type = undefined) => {
-  var myEngine = engine();
-  console.log(myEngine);
+var loadNewScene = (url, rotation, currEngine = undefined, type = undefined,) => {
+  if (currEngine) {
+    if (currEngine.crystalCounter) {
+      loadedData.crystals += currEngine.crystalCounter.counter;
+    }
+  }
 
   historico.push({
     url: url,
@@ -77,7 +84,11 @@ function attachFunctionsToCurrentIframe() {
   engine = () => {
     return miframe.contentWindow.engine || null;
   }
+  engine = engine();
 
+  iframe.contentWindow.loadedData = loadedData;
+  if (miframe.contentWindow.loadPreviousStageData)
+    miframe.contentWindow.loadPreviousStageData();
   iframe.contentWindow.loadNewScene = (url, rotation, type = undefined) => {
     loadNewScene(url, rotation, type);
   }
