@@ -858,7 +858,6 @@ class GameEngine {
       engineLife++;
       this.ceu.mayRise = false;
       this.spaceship.turnedOn = false;
-      this.layeredBackground.mayRise = false;
       this.layoutManager.mayRise = false;
 
       document.querySelector('.gameover-screen').style.display = 'flex'; //Exibe tela de gameover
