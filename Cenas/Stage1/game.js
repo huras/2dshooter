@@ -249,56 +249,33 @@ class GameEngine {
         firstFrame: true,
         keyframe: 0,
         points: [
-          { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
-          { id: 1, color: { r: 142, g: 29, b: 119 }, position: 0.16 },
-          { id: 2, color: { r: 255, g: 12, b: 196 }, position: 0.35 },
-          { id: 3, color: { r: 150, g: 74, b: 116 }, position: 0.58 },
-          { id: 4, color: { r: 198, g: 56, b: 244 }, position: 1 },
-          { id: 5, color: { r: 48, g: 133, b: 78 }, position: 1 },
+          { id: 0, color: { r: 49, g: 76, b: 102 }, position: 0 },
+          { id: 1, color: { r: 52, g: 78, b: 109 }, position: 0.33 },
+          { id: 2, color: { r: 70, g: 92, b: 130 }, position: 1 },
         ]
       },
       {
         keyframe: 1500,
         points: [
-          { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
-          { id: 1, color: { r: 142, g: 29, b: 119 }, position: 0.06 },
-          { id: 2, color: { r: 255, g: 12, b: 196 }, position: 0.15 },
-          { id: 3, color: { r: 150, g: 74, b: 116 }, position: 0.48 },
-          { id: 4, color: { r: 198, g: 56, b: 244 }, position: 0.6 },
-          { id: 5, color: { r: 48, g: 133, b: 78 }, position: 1 },
+          { id: 0, color: { r: 76, g: 104, b: 142 }, position: 0 },
+          { id: 1, color: { r: 93, g: 124, b: 158 }, position: 0.33 },
+          { id: 2, color: { r: 102, g: 138, b: 164 }, position: 1 },
         ]
       },
       {
         keyframe: 3000,
         points: [
-          { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
-          { id: 1, color: { r: 84, g: 41, b: 75 }, position: 0.11 },
-          { id: 2, color: { r: 203, g: 45, b: 233 }, position: 0.20 },
-          { id: 3, color: { r: 150, g: 74, b: 116 }, position: 0.58 },
-          { id: 4, color: { r: 56, g: 183, b: 244 }, position: 0.75 },
-          { id: 5, color: { r: 48, g: 133, b: 78 }, position: 1 },
+          { id: 0, color: { r: 162, g: 162, b: 162 }, position: 0 },
+          { id: 1, color: { r: 168, g: 172, b: 172 }, position: 0.33 },
+          { id: 2, color: { r: 173, g: 201, b: 201 }, position: 1 },
         ]
       },
       {
-        keyframe: 4500,
+        keyframe: 3500,
         points: [
-          { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
-          { id: 1, color: { r: 41, g: 49, b: 84 }, position: 0.07 },
-          { id: 2, color: { r: 45, g: 197, b: 233 }, position: 0.14 },
-          { id: 3, color: { r: 102, g: 74, b: 150 }, position: 0.48 },
-          { id: 4, color: { r: 56, g: 244, b: 179 }, position: 0.81 },
-          { id: 5, color: { r: 131, g: 133, b: 48 }, position: 1 },
-        ]
-      },
-      {
-        keyframe: 5000,
-        points: [
-          { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
-          { id: 1, color: { r: 16, g: 30, b: 92 }, position: 0.07 },
-          { id: 2, color: { r: 40, g: 124, b: 144 }, position: 0.14 },
-          { id: 3, color: { r: 42, g: 21, b: 79 }, position: 0.48 },
-          { id: 4, color: { r: 13, g: 152, b: 104 }, position: 0.81 },
-          { id: 5, color: { r: 11, g: 50, b: 25 }, position: 1 },
+          { id: 0, color: { r: 168, g: 200, b: 200 }, position: 0 },
+          { id: 1, color: { r: 158, g: 192, b: 192 }, position: 0.33 },
+          { id: 2, color: { r: 136, g: 189, b: 189 }, position: 1 },
         ]
       },
     ], this.canvas, this.ctx);
@@ -463,8 +440,8 @@ class GameEngine {
     this.stageBuilder = new ChallengeDynamicBuilder({
       currentSpeed: 1,
       speedStep: 0.15,
-      param1Range: [3, 3, 4, 4, 5, 5],
-      param2Range: [2, 9, 1, 4, 8, 3],
+      param1Range: [6, 5, 7, 5, 6, 7],
+      param2Range: [2, 8, 1, 7, 5, 3],
       currentCheckpoints: initialCheckpoints,
       currentCheckpointCount: 0,
       chooseNextChallenge: () => {
