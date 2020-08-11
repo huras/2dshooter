@@ -310,7 +310,7 @@ class GameEngine {
       generationParams: {
         scale: { min: 0.1, max: 3.5 },
         rotation: { min: -3, max: 3 },
-        images: [nuvem_cenario],
+        images: [estrela],
       },
       fallCondition: () => {
         return this.ceu.mayRise;
@@ -1153,6 +1153,7 @@ var sheetLoader = new SheetLoader();
 // Scenery
 const bg = sheetLoader.queueSheet('../../img/stage1/bg-foguete.png');
 const nuvem_cenario = sheetLoader.queueSheet('../../img/stage1/nuvem_cenario.png');
+const estrela = sheetLoader.queueSheet('../../img/stage1/Estrela.png');
 const plataforma = sheetLoader.queueSheet('../../img/stage1/Plataforma.png');
 const campo = sheetLoader.queueSheet('../../img/stage1/campo.png');
 const montanha1 = sheetLoader.queueSheet('../../img/stage1/Montanha1.png');
