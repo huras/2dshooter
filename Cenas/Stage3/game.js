@@ -427,13 +427,13 @@ class GameEngine {
     const initialCheckpoints = {
       // param1: 2,
       // param2: 2,
-      operation: 'x',
-      readyToBeSolved: '=',
+      // operation: 'x',
+      // readyToBeSolved: '=',
 
       param1: false,
       param2: false,
-      // operation: false,
-      // readyToBeSolved: false
+      operation: false,
+      readyToBeSolved: false
     }
 
     this.stageBuilder = new ChallengeDynamicBuilder({
