@@ -343,12 +343,29 @@ class GameEngine {
         }
         item.position = {
           x: (randomInt(0, 50) / 100) * this.canvas.width,
-          y: -this.canvas.height * randomInt(10, 100) / 100
+          y: this.canvas.height * randomInt(10, 100) / 100
         };
         item.pivot = { x: 0.5, y: 0.5 }
         return item;
       }
     })
+    this.cloudFall.generateBehaviour = (item, params) => {
+
+      item.scale = (randomInt(5, 55) / 100) * (params.scale.max - params.scale.min) + params.scale.min;
+      item.rotation = (randomInt(0, 100) / 100) * (params.rotation.max - params.rotation.min) + params.rotation.min;
+      item.image = params.images[0];
+      item.alpha = ((item.scale / params.scale.max) * 0.3) + 0.7;
+      item.speed = {
+        x: ((randomInt(0, 200) - 100) / 100) * 0.5 * (0.9 * item.scale),
+        y: (randomInt(75, 100) / 100) * (1.2 * item.scale)
+      }
+      item.position = {
+        x: (randomInt(0, 50) / 100) * this.canvas.width,
+        y: -this.canvas.height * randomInt(0, 30) / 100
+      };
+      item.pivot = { x: 0.5, y: 0.5 }
+      return item;
+    }
 
     this.spaceship = new Nave2D({
       initialPosition: {
