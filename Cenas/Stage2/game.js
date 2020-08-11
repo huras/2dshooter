@@ -268,43 +268,43 @@ class GameEngine {
         ]
       },
       {
-        keyframe: 50, //duration
+        keyframe: 1000, //duration
         points: [
           { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
           { id: 1, color: { r: 16, g: 30, b: 92 }, position: 0.01 },
           { id: 2, color: { r: 40, g: 124, b: 144 }, position: 0.02 },
           { id: 3, color: { r: 42, g: 21, b: 79 }, position: 0.03 },
-          { id: 4, color: { r: 13, g: 152, b: 104 }, position: 0.04 },
+          { id: 4, color: { r: 13, g: 52, b: 104 }, position: 0.04 },
           { id: 5, color: { r: 13, g: 125, b: 152 }, position: 0.10 },
           { id: 6, color: { r: 10, g: 23, b: 106 }, position: 0.25 },
-          { id: 7, color: { r: 253, g: 60, b: 255 }, position: 0.53 },
+          { id: 7, color: { r: 253, g: 60, b: 55 }, position: 0.53 },
           { id: 8, color: { r: 200, g: 60, b: 255 }, position: 1 },
         ]
       },
       {
-        keyframe: 100, //duration
+        keyframe: 3000, //duration
         points: [
           { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
           { id: 1, color: { r: 16, g: 30, b: 92 }, position: 0.001 },
           { id: 2, color: { r: 40, g: 124, b: 144 }, position: 0.002 },
           { id: 3, color: { r: 42, g: 21, b: 79 }, position: 0.003 },
           { id: 4, color: { r: 97, g: 24, b: 25 }, position: 0.06 },
-          { id: 5, color: { r: 140, g: 52, b: 131 }, position: 0.25 },
+          { id: 5, color: { r: 40, g: 52, b: 131 }, position: 0.25 },
           { id: 6, color: { r: 209, g: 38, b: 238 }, position: 0.42 },
           { id: 7, color: { r: 226, g: 14, b: 164 }, position: 0.78 },
           { id: 8, color: { r: 97, g: 24, b: 25 }, position: 1 },
         ]
       },
       {
-        keyframe: 1500, //duration
+        keyframe: 5000, //duration
         points: [
           { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
           { id: 1, color: { r: 16, g: 30, b: 92 }, position: 0.001 },
           { id: 2, color: { r: 40, g: 124, b: 144 }, position: 0.002 },
           { id: 3, color: { r: 42, g: 21, b: 79 }, position: 0.003 },
-          { id: 4, color: { r: 70, g: 15, b: 62 }, position: 0.11 },
+          { id: 4, color: { r: 70, g: 15, b: 162 }, position: 0.11 },
           { id: 5, color: { r: 79, g: 27, b: 113 }, position: 0.31 },
-          { id: 6, color: { r: 90, g: 24, b: 136 }, position: 0.36 },
+          { id: 6, color: { r: 90, g: 124, b: 136 }, position: 0.36 },
           { id: 7, color: { r: 85, g: 24, b: 93 }, position: 0.6 },
           { id: 8, color: { r: 50, g: 7, b: 15 }, position: 1 },
         ]

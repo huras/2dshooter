@@ -258,7 +258,7 @@ class GameEngine {
         ]
       },
       {
-        keyframe: 500,
+        keyframe: 1500,
         points: [
           { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
           { id: 1, color: { r: 142, g: 29, b: 119 }, position: 0.06 },
@@ -269,7 +269,7 @@ class GameEngine {
         ]
       },
       {
-        keyframe: 1000,
+        keyframe: 3000,
         points: [
           { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
           { id: 1, color: { r: 84, g: 41, b: 75 }, position: 0.11 },
@@ -280,7 +280,7 @@ class GameEngine {
         ]
       },
       {
-        keyframe: 1500,
+        keyframe: 4500,
         points: [
           { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
           { id: 1, color: { r: 41, g: 49, b: 84 }, position: 0.07 },
@@ -291,7 +291,7 @@ class GameEngine {
         ]
       },
       {
-        keyframe: 2000,
+        keyframe: 5000,
         points: [
           { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
           { id: 1, color: { r: 16, g: 30, b: 92 }, position: 0.07 },
