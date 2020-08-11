@@ -308,7 +308,7 @@ class GameEngine {
       ctx: this.ctx,
       amount: 15,
       generationParams: {
-        scale: { min: 0.1, max: 3.5 },
+        scale: { min: 0.1, max: 0.5 },
         rotation: { min: -3, max: 3 },
         images: [estrela],
       },
@@ -336,7 +336,7 @@ class GameEngine {
         item.scale = (randomInt(5, 55) / 100) * (params.scale.max - params.scale.min) + params.scale.min;
         item.rotation = (randomInt(0, 100) / 100) * (params.rotation.max - params.rotation.min) + params.rotation.min;
         item.image = params.images[0];
-        item.alpha = ((item.scale / params.scale.max) * 0.7) + 0.05;
+        item.alpha = ((item.scale / params.scale.max) * 0.3) + 0.7;
         item.speed = {
           x: ((randomInt(0, 200) - 100) / 100) * 0.5 * (0.9 * item.scale),
           y: (randomInt(75, 100) / 100) * (1.2 * item.scale)
