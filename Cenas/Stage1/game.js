@@ -943,6 +943,8 @@ class GameEngine {
       this.layeredBackground.mayRise = boolean;
       this.layoutManager.mayRise = boolean;
     }
+    this.spaceship.turnedOn = true;
+    this.ceu.mayRise = true;
 
     // =========================== Filminho inicial
     var lancarFoguete = () => {
