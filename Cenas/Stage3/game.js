@@ -440,7 +440,7 @@ class GameEngine {
       currentSpeed: 1,
       speedStep: 0.15,
       param1Range: [4, 5, 3, 4, 5, 4], // Na fase 3 o barato é louco
-      param2Range: [4, 6, 4, 8, 5, 9],
+      param2Range: [4, 6, 7, 8, 5, 9],
       currentCheckpoints: initialCheckpoints,
       currentCheckpointCount: 0,
       chooseNextChallenge: () => {

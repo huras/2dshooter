@@ -452,7 +452,7 @@ class GameEngine {
       currentSpeed: 1,
       speedStep: 0.15,
       param1Range: [3, 5, 4, 3, 4, 5],
-      param2Range: [9, 4, 3, 5, 8, 5],
+      param2Range: [9, 4, 3, 6, 8, 5],
       currentCheckpoints: initialCheckpoints,
       currentCheckpointCount: 0,
       chooseNextChallenge: () => {
