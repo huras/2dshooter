@@ -492,7 +492,7 @@ class GameEngine {
     this.stageBuilder = new ChallengeDynamicBuilder({
       currentSpeed: 1,
       speedStep: 0.15,
-      param1Range: [1, 1, 1, 1, 2, 2, 2],
+      param1Range: [1, 2, 3, 3, 3, 3, 4, 4, 4], // Como tem mais 4 e 3 a achance de sair uma operação deles é maior. O "saco" é "sacudido" toda vez antes de selecionar uma peça.
       param2Range: [2, 3, 4, 5, 6, 7, 8, 9],
       currentCheckpoints: initialCheckpoints,
       currentCheckpointCount: 0,

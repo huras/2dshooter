@@ -464,7 +464,7 @@ class GameEngine {
       currentSpeed: 1,
       speedStep: 0.15,
       param1Range: [1, 1, 2, 2, 3, 3, 4, 4], // É como se o array fosse um saquinho e o algoritmo sorteia um dos elementos lá dentro, nesse saco as peças podem repetir. Depois de sorteada, a peça do saco 1 volta para dentro do saco.
-      param2Range: [2, 3, 4, 5, 6, 7, 8, 9], // Saco 2, aqui as peças não podem se repetir. Depois de sorteada, a peça do saco 2 é jogada fora, para não repetir continhas.
+      param2Range: [2, 3, 4, 5, 6, 7], // Saco 2, aqui as peças não podem se repetir. Depois de sorteada, a peça do saco 2 é jogada fora, para não repetir continhas. Tem que ter pelo menos 6 peças.
       currentCheckpoints: initialCheckpoints,
       currentCheckpointCount: 0,
       chooseNextChallenge: () => {
