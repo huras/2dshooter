@@ -422,15 +422,15 @@ class GameEngine {
     });
 
     const initialCheckpoints = {
-      param1: 1,
-      operation: 'x',
-      param2: 1,
-      readyToBeSolved: '=',
+      // param1: 1,
+      // operation: 'x',
+      // param2: 1,
+      // readyToBeSolved: '=',
 
-      // param1: false,
-      // operation: false,
-      // param2: false,
-      // readyToBeSolved: false
+      param1: false,
+      operation: false,
+      param2: false,
+      readyToBeSolved: false
     }
 
     this.stageBuilder = new ChallengeDynamicBuilder({
