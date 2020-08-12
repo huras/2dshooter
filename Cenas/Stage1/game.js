@@ -249,58 +249,36 @@ class GameEngine {
         firstFrame: true,
         keyframe: 0,
         points: [
-          { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
-          { id: 1, color: { r: 142, g: 29, b: 119 }, position: 0.16 },
-          { id: 2, color: { r: 255, g: 12, b: 196 }, position: 0.35 },
-          { id: 3, color: { r: 150, g: 74, b: 116 }, position: 0.58 },
-          { id: 4, color: { r: 198, g: 56, b: 244 }, position: 1 },
-          { id: 5, color: { r: 48, g: 133, b: 78 }, position: 1 },
+          { id: 0, color: { r: 132, g: 214, b: 255 }, position: 0 },
+          { id: 1, color: { r: 129, g: 213, b: 225 }, position: 0.16 },
+          { id: 2, color: { r: 115, g: 206, b: 255 }, position: 0.35 },
+          { id: 3, color: { r: 107, g: 198, b: 247 }, position: 0.58 },
+          { id: 4, color: { r: 97, g: 192, b: 247 }, position: 0.75 },
+          { id: 5, color: { r: 82, g: 181, b: 239 }, position: 1 },
         ]
       },
       {
-        keyframe: 1500,
+        keyframe: 3500,
         points: [
-          { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
-          { id: 1, color: { r: 142, g: 29, b: 119 }, position: 0.06 },
-          { id: 2, color: { r: 255, g: 12, b: 196 }, position: 0.15 },
-          { id: 3, color: { r: 150, g: 74, b: 116 }, position: 0.48 },
-          { id: 4, color: { r: 198, g: 56, b: 244 }, position: 0.6 },
-          { id: 5, color: { r: 48, g: 133, b: 78 }, position: 1 },
+          { id: 0, color: { r: 68, g: 174, b: 239 }, position: 0 },
+          { id: 1, color: { r: 57, g: 165, b: 222 }, position: 0.06 },
+          { id: 2, color: { r: 54, g: 163, b: 222 }, position: 0.15 },
+          { id: 3, color: { r: 41, g: 156, b: 222 }, position: 0.48 },
+          { id: 4, color: { r: 33, g: 148, b: 214 }, position: 0.6 },
+          { id: 5, color: { r: 8, g: 132, b: 206 }, position: 1 },
         ]
-      },
+      },      
       {
-        keyframe: 3000,
+        keyframe: 5500,
         points: [
-          { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
-          { id: 1, color: { r: 84, g: 41, b: 75 }, position: 0.11 },
-          { id: 2, color: { r: 203, g: 45, b: 233 }, position: 0.20 },
-          { id: 3, color: { r: 150, g: 74, b: 116 }, position: 0.58 },
-          { id: 4, color: { r: 56, g: 183, b: 244 }, position: 0.75 },
-          { id: 5, color: { r: 48, g: 133, b: 78 }, position: 1 },
+          { id: 0, color: { r: 122, g: 63, b: 189 }, position: 0 },
+          { id: 1, color: { r: 122, g: 63, b: 189 }, position: 0.07 },
+          { id: 2, color: { r: 75, g: 0, b: 175 }, position: 0.14 },
+          { id: 3, color: { r: 68, g: 0, b: 163 }, position: 0.48 },
+          { id: 4, color: { r: 55, g: 0, b: 133 }, position: 0.81 },
+          { id: 5, color: { r: 39, g: 0, b: 99 }, position: 1 },
         ]
-      },
-      {
-        keyframe: 4500,
-        points: [
-          { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
-          { id: 1, color: { r: 41, g: 49, b: 84 }, position: 0.07 },
-          { id: 2, color: { r: 45, g: 197, b: 233 }, position: 0.14 },
-          { id: 3, color: { r: 102, g: 74, b: 150 }, position: 0.48 },
-          { id: 4, color: { r: 56, g: 244, b: 179 }, position: 0.81 },
-          { id: 5, color: { r: 131, g: 133, b: 48 }, position: 1 },
-        ]
-      },
-      {
-        keyframe: 5000,
-        points: [
-          { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
-          { id: 1, color: { r: 16, g: 30, b: 92 }, position: 0.07 },
-          { id: 2, color: { r: 40, g: 124, b: 144 }, position: 0.14 },
-          { id: 3, color: { r: 42, g: 21, b: 79 }, position: 0.48 },
-          { id: 4, color: { r: 13, g: 152, b: 104 }, position: 0.81 },
-          { id: 5, color: { r: 11, g: 50, b: 25 }, position: 1 },
-        ]
-      },
+      },    
     ], this.canvas, this.ctx);
 
     this.cloudFall = new ParticleFall({
