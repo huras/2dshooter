@@ -451,8 +451,8 @@ class GameEngine {
     this.stageBuilder = new ChallengeDynamicBuilder({
       currentSpeed: 1,
       speedStep: 0.15,
-      param1Range: [4, 5, 3, 3, 4, 3, 4], // Na fase 3 o barato é louco
-      param2Range: [9, 4, 3, 6, 8, 5],
+      param1Range: [9, 8, 7, 6, 7, 8], // Na fase 3 o barato é louco
+      param2Range: [1, 6, 5, 8, 7, 4],
       currentCheckpoints: initialCheckpoints,
       currentCheckpointCount: 0,
       chooseNextChallenge: () => {
