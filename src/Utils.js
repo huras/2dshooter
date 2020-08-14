@@ -108,6 +108,15 @@ window.mobileAndTabletCheck = function () {
   return check;
 };
 
+// iOS Compatibility
+
+if (!('performance' in window)) {
+  const offset = Date.now()
+  window.performance = {
+    now: () => Date.now() - offset
+  }
+}
+
 if (!Math.sign) {
   Math.sign = function (value) {
     if (value >= 0) { return 1 }
