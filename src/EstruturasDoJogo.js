@@ -858,7 +858,6 @@ class ObjectLayoutReader {
   }
 
   randomNextQuestion() {
-    // debugger;
     return this.randomNextStage(this.questionPool, 0);
   }
 

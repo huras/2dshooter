@@ -803,7 +803,7 @@ class GameEngine {
       };
 
       // consolelog('frag change:', this.frag);
-      // debugger;
+
       // console.log(clientRectangle); //or left, right, bottom
 
       switch (crystalValue) {
@@ -978,7 +978,8 @@ class GameEngine {
         }
         //Check Ship Collisions with Hazards
         //Check Ship Collisions with Colliders
-        this.crystalCounter.updateHUD();
+        if (this.crystalCounter)
+          this.crystalCounter.updateHUD();
       }
 
       this.engineAudioLoop(); //Control Ship Sound
