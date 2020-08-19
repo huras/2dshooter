@@ -775,13 +775,12 @@ class ObjectLayoutReader {
 
   readChallenges() {
     this.layoutReader = new ShipLayoutReader();
-    this.layoutReader.load(this.layoutSrc, () => {
-      this.transformObjectsValues();
-      this.hasLoaded = this.layoutReader.hasLoaded;
-      if (this.challengePool.length > 0 && this.chooseNextChallenge) {
-        this.chooseNextChallenge();
-      }
-    });
+    this.layoutReader.load(this.layoutSrc);
+    this.transformObjectsValues();
+    this.hasLoaded = this.layoutReader.hasLoaded;
+    if (this.challengePool.length > 0 && this.chooseNextChallenge) {
+      this.chooseNextChallenge();
+    }
   }
 
   transformObjectsValues() {

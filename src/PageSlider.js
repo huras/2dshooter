@@ -67,13 +67,16 @@ function gotoCurrentPage() {
     nextButton.style.display = 'block';
   }
 
-  checkCorrectRotation();
-
   iframe.onload = function () {
-    // debugger;
     prepareMovie();
     attachFunctionsToCurrentIframe();
   };
+
+  try {
+    checkCorrectRotation();
+  } catch (error) {
+
+  }
 }
 
 var miframe = undefined;
