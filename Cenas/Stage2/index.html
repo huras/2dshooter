@@ -6,28 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title> Roletas </title>
+  <link rel="stylesheet" href="../../css/canvasDefault.css">
+  <link rel="stylesheet" href="../../css/HUD.css">
 </head>
-<style>
-  body {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-  }
-
-  @media (max-width: 768px) {
-    body {
-      margin: 0;
-    }
-
-    canvas {
-      width: calc(100vw);
-      height: calc(100vh);
-    }
-  }
-</style>
 
 <body>
   <!-- <script src="../../src/Utils.js"></script>
@@ -39,19 +20,12 @@
   <script src="../../src/ShipLayoutReader.js"></script>
   <script src="../../src/EstruturasDoJogo.js"></script> -->
 
-  <script src="../../src/babel/Utils.js"></script>
-  <script src="../../src/babel/Physics.js"></script>
-  <script src="../../src/babel/SheetLoader.js"></script>
-  <script src="../../src/babel/CanvasInterface.js"></script>
-  <script src="../../src/babel/InputManager.js"></script>
-  <script src="../../src/babel/TxtReader.js"></script>
-  <script src="../../src/babel/ShipLayoutReader.js"></script>
-  <script src="../../src/babel/EstruturasDoJogo.js"></script>
+  <script src="../../src/babel/bundle.js"></script>
 
   <!-- <audio preload="automatic" id="SFX-roleta-rodando">
     <source src="./audio/SFX_roleta-rodando.mp3" type="audio/mp3" />
   </audio> -->
-  <link rel="stylesheet" href="../../css/HUD.css">
+
 
   <div class='interactableHUD'>
 

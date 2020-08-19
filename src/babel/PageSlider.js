@@ -1,23 +1,30 @@
 "use strict";
 
 var currentPage = 0;
-var historico = [
-  // {
-  //   url: './Cenas/Stage1',
-  //   rotation: "portrait-primary",
-  //   // type: 'animation'
-  // }
-  {
-    url: "./Cenas/Menu",
-    rotation: "portrait-primary" // type: 'animation'
-  }
-]; // Gerencia histórico
+var historico = [// {
+//   url: './Cenas/Stage1',
+//   rotation: "portrait-primary",
+//   // type: 'animation'
+// }
+{
+  url: './Cenas/Menu',
+  rotation: "portrait-primary" // type: 'animation'
+
+}];
+var loadedData = {
+  crystals: 0
+}; // Gerencia histórico
 
 var loadNewScene = function loadNewScene(url, rotation) {
-  var type =
-    arguments.length > 2 && arguments[2] !== undefined
-      ? arguments[2]
-      : undefined;
+  var currEngine = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
+  var type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;
+
+  if (currEngine) {
+    if (currEngine.crystalCounter) {
+      loadedData.crystals += currEngine.crystalCounter.counter;
+    }
+  }
+
   historico.push({
     url: url,
     rotation: rotation,
@@ -26,65 +33,63 @@ var loadNewScene = function loadNewScene(url, rotation) {
   nextPage();
 }; // ======================================
 
+
 function randomHead() {
-  var heads = [
-    document.getElementById("brenda-head"),
-    document.getElementById("zeca-head"),
-    document.getElementById("lucia-head")
-  ];
+  var heads = [document.getElementById('brenda-head'), document.getElementById('zeca-head'), document.getElementById('lucia-head')];
   heads.map(function (head) {
-    head.style.display = "none";
+    head.style.display = 'none';
   });
   var headToShowIdx = Math.floor(randomInt(0, heads.length * 2) / 2);
-  heads[headToShowIdx].style.display = "flex";
+  heads[headToShowIdx].style.display = 'flex';
 }
 
 randomHead();
 
 function gotoCurrentPage() {
   randomHead();
-  var iframe = document.querySelector("iframe");
+  var iframe = document.querySelector('iframe');
   iframe.src = historico[currentPage].url;
-  document.getElementById("page-counter").innerHTML =
-    "Página " + (currentPage + 1) + " de " + historico.length;
-  var prevButton = document.getElementById("prev-btn");
-  var nextButton = document.getElementById("next-btn");
-  prevButton.style.display = "none";
-  nextButton.style.display = "none";
+  document.getElementById('page-counter').innerHTML = 'Página ' + (currentPage + 1) + ' de ' + historico.length;
+  var prevButton = document.getElementById('prev-btn');
+  var nextButton = document.getElementById('next-btn');
+  prevButton.style.display = 'none';
+  nextButton.style.display = 'none';
 
   if (currentPage > 0) {
-    prevButton.style.display = "block";
+    prevButton.style.display = 'block';
   }
 
   if (currentPage < historico.length - 1) {
-    nextButton.style.display = "block";
+    nextButton.style.display = 'block';
   }
 
-  checkCorrectRotation();
-
   iframe.onload = function () {
-    // debugger;
     prepareMovie();
     attachFunctionsToCurrentIframe();
   };
+
+  try {
+    checkCorrectRotation();
+  } catch (error) {}
 }
 
 var miframe = undefined;
 var engine = undefined;
 
 function attachFunctionsToCurrentIframe() {
-  var iframe = document.querySelector("iframe");
+  var iframe = document.querySelector('iframe');
   miframe = iframe;
 
   engine = function engine() {
     return miframe.contentWindow.engine || null;
   };
 
+  engine = engine();
+  iframe.contentWindow.loadedData = loadedData;
+  if (miframe.contentWindow.loadPreviousStageData) miframe.contentWindow.loadPreviousStageData();
+
   iframe.contentWindow.loadNewScene = function (url, rotation) {
-    var type =
-      arguments.length > 2 && arguments[2] !== undefined
-        ? arguments[2]
-        : undefined;
+    var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
     loadNewScene(url, rotation, type);
   };
 
@@ -106,10 +111,10 @@ function prepareMovie() {
       iframe.contentWindow.playMovie();
     }
 
-    var nextPageBtn = iframe.contentWindow.document.getElementById("nextPage");
+    var nextPageBtn = iframe.contentWindow.document.getElementById('nextPage');
 
     if (nextPageBtn) {
-      nextPageBtn.addEventListener("click", function () {
+      nextPageBtn.addEventListener('click', function () {
         nextPage();
       });
     }
@@ -128,7 +133,7 @@ function prepareMovie() {
             if (iframe.contentWindow.showResults) {
               iframe.contentWindow.setFrag(totalFrag);
               iframe.contentWindow.showResults();
-            } else console.log("no results function to call");
+            } else console.log('no results function to call');
           }
         }
       };
@@ -142,11 +147,7 @@ function checkCorrectRotation() {
   if (screen.orientation.lock) {
     screen.orientation.lock(rotationToApply);
   } else {
-    screen.lockOrientationUniversal =
-      screen.orientation.lock ||
-      screen.lockOrientation ||
-      screen.mozLockOrientation ||
-      screen.msLockOrientation;
+    screen.lockOrientationUniversal = screen.orientation.lock || screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation;
     screen.lockOrientationUniversal(rotationToApply);
   }
 }
@@ -184,42 +185,36 @@ function openFullscreen(elem) {
   }
 }
 
-document.querySelector("iframe").addEventListener("mouseover", function () {
-  // openFullscreen(document.querySelector('body'));
+document.querySelector('iframe').addEventListener('mouseover', function () {// openFullscreen(document.querySelector('body'));
 });
-window.addEventListener("fullscreenchange", function (event) {
+window.addEventListener('fullscreenchange', function (event) {
   // console.log(event);
   checkFullScreenRoutine(false);
 });
 
 function checkFullScreenRoutine() {
-  var clicked =
-    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-  var overlay = document.getElementById("slider-fullscreen-overlay");
+  var clicked = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+  var overlay = document.getElementById('slider-fullscreen-overlay');
 
   if (clicked) {
-    overlay.style.display = "none";
+    overlay.style.display = 'none';
 
     if (!document.fullscreenElement) {
-      openFullscreen(document.querySelector("body"));
+      openFullscreen(document.querySelector('body'));
     }
   } else {
     if (!document.fullscreenElement) {
-      overlay.style.display = "flex";
+      overlay.style.display = 'flex';
     }
   }
 
   prepareMovie();
 }
 
-document.querySelector("body").addEventListener(
-  "click",
-  function () {
-    checkFullScreenRoutine();
-    checkCorrectRotation();
-  },
-  false
-);
+document.querySelector('body').addEventListener("click", function () {
+  checkFullScreenRoutine();
+  checkCorrectRotation();
+}, false);
 checkFullScreenRoutine(false);
 
 function randomInt(min, max) {
