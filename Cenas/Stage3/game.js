@@ -465,26 +465,45 @@ class GameEngine {
         var checkpointValue = "", generateCheckpointValue = undefined;
         var possibilities = [];
 
-        if (this.stageBuilder.currentCheckpoints.param1 == false) {
-          possibilities.push(() => {
-            generateCheckpointValue = (myObj) => {
-              checkpointValue = shuffle([...this.stageBuilder.param1Range])[0];
-              myObj.properties.checkpointValue = checkpointValue;
+        const tryPushParams = () => {
+          const tryPushParam1 = () => {
+            if (this.stageBuilder.currentCheckpoints.param1 == false && !param1Pushed) {
+              param1Pushed = true;
+              possibilities.push(() => {
+                generateCheckpointValue = (myObj) => {
+                  checkpointValue = shuffle([...this.stageBuilder.param1Range])[0];
+                  myObj.properties.checkpointValue = checkpointValue;
+
+                  tryPushParam2();
+                }
+              })
             }
-          })
-        }
-        if (this.stageBuilder.currentCheckpoints.param2 == false) {
-          possibilities.push(() => {
-            generateCheckpointValue = (myObj) => {
-              checkpointValue = shuffle([...this.stageBuilder.param2Range])[0];
-              myObj.properties.checkpointValue = checkpointValue;
+          }
+          var param1Pushed = false;
+          tryPushParam1();
+
+          const tryPushParam2 = () => {
+            if (this.stageBuilder.currentCheckpoints.param2 == false && this.stageBuilder.currentCheckpoints.param1 != false && !param2Pushed) {
+              param2Pushed = true;
+              possibilities.push(() => {
+                generateCheckpointValue = (myObj) => {
+                  checkpointValue = shuffle([...this.stageBuilder.param2Range])[0];
+                  engine.divisionAnswer = checkpointValue;
+                  myObj.properties.checkpointValue = this.stageBuilder.currentCheckpoints.param1 * checkpointValue;
+                }
+              })
             }
-          })
+          }
+          var param2Pushed = false;
+          tryPushParam2();
         }
+
+        tryPushParams();
+
         if (this.stageBuilder.currentCheckpoints.operation == false) {
           possibilities.push(() => {
             generateCheckpointValue = (myObj) => {
-              myObj.properties.checkpointValue = "x";
+              myObj.properties.checkpointValue = "÷";
             }
           })
         }
@@ -503,6 +522,10 @@ class GameEngine {
               obj.properties.previousCheckpoint = lastNeighbour;
             }
 
+            if (possibilities.length == 0) {
+              console.log("Erro! Sem possibilidade de checkpoints")
+            }
+
             const currentPossibilityIdx = randomInt(0, possibilities.length);
             const currPossibility = possibilities[currentPossibilityIdx];
             currPossibility();
@@ -511,6 +534,8 @@ class GameEngine {
             lastNeighbour = obj;
             obj.properties.generateCheckpointValue = generateCheckpointValue;
             obj.properties.generateCheckpointValue(obj);
+
+            tryPushParams();
           }
         })
       },
@@ -532,9 +557,9 @@ class GameEngine {
 
         const param1 = this.stageBuilder.currentCheckpoints.param1;
         const param2 = this.stageBuilder.currentCheckpoints.param2;
-        const expectedAnswer = param1 * param2;
+        const expectedAnswer = engine.divisionAnswer;
 
-        this.stageBuilder.expectedAnswer = expectedAnswer;
+        this.stageBuilder.expectedAnswer = engine.divisionAnswer;
 
         var resultPool = [];
         stage.objects.map(obj => {
@@ -555,10 +580,10 @@ class GameEngine {
             else {
               const options = [];
               const candidates = []
-              candidates.push(param1 + param2);
-              candidates.push(Math.abs(param1 - param2));
-              candidates.push(Math.floor(param1 + (param2 * 1.5)));
-              if (param2 == param1)
+              candidates.push(param1 + engine.divisionAnswer);
+              candidates.push(Math.abs(param1 - engine.divisionAnswer));
+              candidates.push(Math.floor(param1 + (engine.divisionAnswer * 1.5)));
+              if (engine.divisionAnswer == param1)
                 candidates.push(randomInt(3, 5));
               candidates.map(c => {
                 if (c == 0)
