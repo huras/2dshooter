@@ -771,6 +771,7 @@ class ObjectLayoutReader {
     this.objectPrefabs = options.objectPrefabs || [];
     this.mayRise = false;
     this.hasLoaded = false;
+    this.velocidade = options.velocidade || 3.5;
   }
 
   readChallenges() {
@@ -1082,7 +1083,7 @@ class ObjectLayoutReader {
     }
 
     if (this.mayRise == true) {
-      this.currentOffset.y += 3.5;
+      this.currentOffset.y += this.velocidade;
     }
   }
 
