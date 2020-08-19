@@ -13,3 +13,5 @@ yarn-error.log
 /package-lock.json
 .lock
 /public/mix-manifest.json
+**/transpiled*
+**/babel/*
