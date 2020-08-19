@@ -421,14 +421,14 @@ class GameEngine {
     })
 
     const initialCheckpoints = {
-      // param1: 2,
+      // param1: 8,
       // operation: '÷',
-      // param2: 2,
+      // param2: 64,
       // readyToBeSolved: '=',
 
       param1: false,
-      operation: false,
       param2: false,
+      operation: false,
       readyToBeSolved: false
     }
 
@@ -476,57 +476,53 @@ class GameEngine {
         var param1Pushed = false;
         var param2Pushed = false;
 
-        const tryPushParams = () => {
-          possibilities = [];
-          const tryPushParam1 = () => {
-            if (this.stageBuilder.currentCheckpoints.param1 == false && !param1Pushed) {
-              param1Pushed = true;
-              possibilities.push(() => {
-                generateCheckpointValue = (myObj) => {
-                  checkpointValue = shuffle([...this.stageBuilder.param1Range])[0];
-                  myObj.properties.checkpointValue = checkpointValue;
 
-                  tryPushParam2();
-                }
-              })
-            }
-          }
-          tryPushParam1();
-
-          const tryPushParam2 = () => {
-            if (this.stageBuilder.currentCheckpoints.param2 == false && this.stageBuilder.currentCheckpoints.param1 != false && !param2Pushed) {
-              param2Pushed = true;
-              possibilities.push(() => {
-                generateCheckpointValue = (myObj) => {
-                  checkpointValue = shuffle([...this.stageBuilder.param2Range])[0];
-                  engine.divisionAnswer = checkpointValue;
-                  myObj.properties.checkpointValue = this.stageBuilder.currentCheckpoints.param1 * checkpointValue;
-                }
-              })
-            }
-          }
-          tryPushParam2();
-
-          if (this.stageBuilder.currentCheckpoints.operation == false) {
-            possibilities.push(() => {
-              generateCheckpointValue = (myObj) => {
-                myObj.properties.checkpointValue = "÷";
+        if (this.stageBuilder.currentCheckpoints.param1 == false) {
+          param1Pushed = true;
+          possibilities.push(() => {
+            generateCheckpointValue = (myObj) => {
+              if (this.lastRandomParam1 == undefined) {
+                checkpointValue = shuffle([...this.stageBuilder.param1Range])[0];
+                this.lastRandomParam1 = checkpointValue;
               }
-            })
-          }
-          if (this.stageBuilder.currentCheckpoints.readyToBeSolved == false) {
+              myObj.properties.checkpointValue = this.lastRandomParam1;
+            }
+          })
+        }
+
+        const tryPushParam2 = () => {
+          if (this.stageBuilder.currentCheckpoints.param2 == false && this.lastRandomParam1 && param2Pushed == false) {
+            param2Pushed = true;
             possibilities.push(() => {
               generateCheckpointValue = (myObj) => {
-                myObj.properties.checkpointValue = "=";
+                checkpointValue = shuffle([...this.stageBuilder.param2Range])[0];
+                engine.divisionAnswer = checkpointValue;
+                myObj.properties.checkpointValue = this.lastRandomParam1 * checkpointValue;
               }
             })
           }
         }
 
-        tryPushParams();
+        if (this.stageBuilder.currentCheckpoints.operation == false) {
+          possibilities.push(() => {
+            generateCheckpointValue = (myObj) => {
+              myObj.properties.checkpointValue = "÷";
+            }
+          })
+        }
+        if (this.stageBuilder.currentCheckpoints.readyToBeSolved == false) {
+          possibilities.push(() => {
+            generateCheckpointValue = (myObj) => {
+              myObj.properties.checkpointValue = "=";
+            }
+          })
+        }
+
 
         stage.objects.map(obj => {
           if (obj.properties.type == 'checkpoint') {
+            tryPushParam2();
+
             if (lastNeighbour) {
               lastNeighbour.properties.nextCheckpoint = obj;
               obj.properties.previousCheckpoint = lastNeighbour;
@@ -544,8 +540,6 @@ class GameEngine {
             lastNeighbour = obj;
             obj.properties.generateCheckpointValue = generateCheckpointValue;
             obj.properties.generateCheckpointValue(obj);
-
-            tryPushParams();
           }
         })
       },
@@ -580,6 +574,14 @@ class GameEngine {
 
         var idx = 0;
         var usedWrongAnswers = [];
+
+        var candidates = [];
+        // candidates.push(param1 + expectedAnswer);
+        // if (param1 != expectedAnswer)
+        //   candidates.push(Math.abs(param1 - expectedAnswer));
+
+        // debugger;
+
         stage.objects.map(obj => {
           if (obj.properties.type == 'result-option') {
             obj.properties.allResults = resultPool;
@@ -588,29 +590,22 @@ class GameEngine {
               obj.properties.checkpointValue = expectedAnswer;
             }
             else {
-              const options = [];
-              const candidates = [];
-              candidates.push(param1 + expectedAnswer);
-              candidates.push(Math.abs(param1 - expectedAnswer));
-              candidates.push(Math.floor(param1 + (expectedAnswer * 1.5)));
-              if (expectedAnswer == param1)
-                candidates.push(randomInt(3, 5));
-              candidates.map(c => {
-                if (c == 0)
-                  c = 1;
-                if (usedWrongAnswers.indexOf(c) == -1) {
-                  options.push(c);
-                }
-              })
-              const limit = 10;
+
+              const limit = 3;
               var tries = 0;
               var newWrongAnswer = undefined;
+
               do {
-                newWrongAnswer = options[randomInt(0, options.length)];
+                if (tries >= limit || candidates.length == 0) {
+                  const newCandidate = randomInt(Math.ceil(Math.min(param1, (param2 / param1)) / 2), Math.min(param1, (param2 / param1)) * 4);
+                  if (usedWrongAnswers.indexOf(newCandidate) == -1)
+                    candidates.push(newCandidate);
+                }
+
+                newWrongAnswer = candidates[randomInt(0, candidates.length)];
                 tries++;
-                if (tries >= limit)
-                  candidates.push(randomInt(1, 100));
-              } while (newWrongAnswer == expectedAnswer || usedWrongAnswers.indexOf(newWrongAnswer) != -1)
+              } while (newWrongAnswer == expectedAnswer || newWrongAnswer == undefined)
+              candidates.remove(newWrongAnswer);
               usedWrongAnswers.push(newWrongAnswer);
               obj.properties.checkpointValue = newWrongAnswer;
             }
@@ -793,6 +788,7 @@ class GameEngine {
 
       this.stageBuilder.param2Range.splice(this.stageBuilder.param2Range.indexOf(answerGiven), 1);
       this.stageBuilder.resetCheckpointCounter();
+      this.lastRandomParam1 = undefined;
       this.stageBuilder.chooseNextChallenge();
 
       this.acertosHUD.updateHUD();
