@@ -253,7 +253,7 @@ class GameEngine {
           { id: 1, color: { r: 136, g: 4, b: 0 }, position: 0.16 },
           { id: 2, color: { r: 169, g: 11, b: 0 }, position: 0.35 },
           { id: 3, color: { r: 239, g: 58, b: 0 }, position: 0.88 },
-          { id: 4, color: { r: 251, g: 95, b: 21 }, position: 1 },          
+          { id: 4, color: { r: 251, g: 95, b: 21 }, position: 1 },
         ]
       },
       {
@@ -263,7 +263,7 @@ class GameEngine {
           { id: 1, color: { r: 253, g: 153, b: 91 }, position: 0.06 },
           { id: 2, color: { r: 242, g: 183, b: 149 }, position: 0.15 },
           { id: 3, color: { r: 235, g: 191, b: 116 }, position: 0.48 },
-          { id: 4, color: { r: 235, g: 191, b: 166 }, position: 0.6 },          
+          { id: 4, color: { r: 235, g: 191, b: 166 }, position: 0.6 },
         ]
       },
       {
@@ -273,7 +273,7 @@ class GameEngine {
           { id: 1, color: { r: 160, g: 139, b: 182 }, position: 0.11 },
           { id: 2, color: { r: 149, g: 113, b: 157 }, position: 0.20 },
           { id: 3, color: { r: 111, g: 78, b: 107 }, position: 0.58 },
-          { id: 4, color: { r: 59, g: 21, b: 32 }, position: 0.75 },          
+          { id: 4, color: { r: 59, g: 21, b: 32 }, position: 0.75 },
         ]
       },
     ], this.canvas, this.ctx);
@@ -425,7 +425,7 @@ class GameEngine {
 
     const initialCheckpoints = {
       // param1: 1,
-      // operation: 'x',
+      // operation: '÷',
       // param2: 1,
       // readyToBeSolved: '=',
 
@@ -476,26 +476,45 @@ class GameEngine {
         var checkpointValue = "", generateCheckpointValue = undefined;
         var possibilities = [];
 
-        if (this.stageBuilder.currentCheckpoints.param1 == false) {
-          possibilities.push(() => {
-            generateCheckpointValue = (myObj) => {
-              checkpointValue = shuffle([...this.stageBuilder.param1Range])[0];
-              myObj.properties.checkpointValue = checkpointValue;
+        const tryPushParams = () => {
+          const tryPushParam1 = () => {
+            if (this.stageBuilder.currentCheckpoints.param1 == false && !param1Pushed) {
+              param1Pushed = true;
+              possibilities.push(() => {
+                generateCheckpointValue = (myObj) => {
+                  checkpointValue = shuffle([...this.stageBuilder.param1Range])[0];
+                  myObj.properties.checkpointValue = checkpointValue;
+
+                  tryPushParam2();
+                }
+              })
             }
-          })
-        }
-        if (this.stageBuilder.currentCheckpoints.param2 == false) {
-          possibilities.push(() => {
-            generateCheckpointValue = (myObj) => {
-              checkpointValue = shuffle([...this.stageBuilder.param2Range])[0];
-              myObj.properties.checkpointValue = checkpointValue;
+          }
+          var param1Pushed = false;
+          tryPushParam1();
+
+          const tryPushParam2 = () => {
+            if (this.stageBuilder.currentCheckpoints.param2 == false && this.stageBuilder.currentCheckpoints.param1 != false && !param2Pushed) {
+              param2Pushed = true;
+              possibilities.push(() => {
+                generateCheckpointValue = (myObj) => {
+                  checkpointValue = shuffle([...this.stageBuilder.param2Range])[0];
+                  engine.divisionAnswer = checkpointValue;
+                  myObj.properties.checkpointValue = this.stageBuilder.currentCheckpoints.param1 * checkpointValue;
+                }
+              })
             }
-          })
+          }
+          var param2Pushed = false;
+          tryPushParam2();
         }
+
+        tryPushParams();
+
         if (this.stageBuilder.currentCheckpoints.operation == false) {
           possibilities.push(() => {
             generateCheckpointValue = (myObj) => {
-              myObj.properties.checkpointValue = "x";
+              myObj.properties.checkpointValue = "÷";
             }
           })
         }
@@ -514,6 +533,10 @@ class GameEngine {
               obj.properties.previousCheckpoint = lastNeighbour;
             }
 
+            if (possibilities.length == 0) {
+              console.log("Erro! Sem possibilidade de checkpoints")
+            }
+
             const currentPossibilityIdx = randomInt(0, possibilities.length);
             const currPossibility = possibilities[currentPossibilityIdx];
             currPossibility();
@@ -522,6 +545,8 @@ class GameEngine {
             lastNeighbour = obj;
             obj.properties.generateCheckpointValue = generateCheckpointValue;
             obj.properties.generateCheckpointValue(obj);
+
+            tryPushParams();
           }
         })
       },
@@ -543,9 +568,9 @@ class GameEngine {
 
         const param1 = this.stageBuilder.currentCheckpoints.param1;
         const param2 = this.stageBuilder.currentCheckpoints.param2;
-        const expectedAnswer = param1 * param2;
+        const expectedAnswer = engine.divisionAnswer;
 
-        this.stageBuilder.expectedAnswer = expectedAnswer;
+        this.stageBuilder.expectedAnswer = engine.divisionAnswer;
 
         var resultPool = [];
         stage.objects.map(obj => {
@@ -566,10 +591,10 @@ class GameEngine {
             else {
               const options = [];
               const candidates = []
-              candidates.push(param1 + param2);
-              candidates.push(Math.abs(param1 - param2));
-              candidates.push(Math.floor(param1 + (param2 * 1.5)));
-              if (param2 == param1)
+              candidates.push(param1 + engine.divisionAnswer);
+              candidates.push(Math.abs(param1 - engine.divisionAnswer));
+              candidates.push(Math.floor(param1 + (engine.divisionAnswer * 1.5)));
+              if (engine.divisionAnswer == param1)
                 candidates.push(randomInt(3, 5));
               candidates.map(c => {
                 if (c == 0)

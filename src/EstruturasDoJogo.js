@@ -1132,7 +1132,7 @@ class ChallengeDynamicBuilder {
   }
 
   onCollectCheckpointPiece(piece) {
-    if (piece.properties.checkpointValue == 'x') {
+    if (piece.properties.checkpointValue == '÷') {
       this.currentCheckpoints.operation = piece.properties.checkpointValue;
     } else if (piece.properties.checkpointValue == '=') {
       this.currentCheckpoints.readyToBeSolved = piece.properties.checkpointValue;
@@ -1154,9 +1154,9 @@ class ChallengeDynamicBuilder {
 
   updateHUD() {
     var params = [
-      this.currentCheckpoints.param1,
-      this.currentCheckpoints.operation,
       this.currentCheckpoints.param2,
+      this.currentCheckpoints.operation,
+      this.currentCheckpoints.param1,
       this.currentCheckpoints.readyToBeSolved,
     ]
     var pieces = document.querySelectorAll('.checkpoint .piece');
