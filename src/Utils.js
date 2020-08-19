@@ -108,34 +108,6 @@ window.mobileAndTabletCheck = function () {
   return check;
 };
 
-// iOS Compatibility
-
-if (!('performance' in window)) {
-  const offset = Date.now()
-  window.performance = {
-    now: () => Date.now() - offset
-  }
-}
-
-if (!Math.sign) {
-  Math.sign = function (value) {
-    if (value >= 0) { return 1 }
-    else return -1;
-  }
-}
-
-if (!window.requestAnimationFrame) {
-  window.requestAnimationFrame = (function () {
-    return window.webkitRequestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.oRequestAnimationFrame ||
-      window.msRequestAnimationFrame ||
-      function (callback, element) {
-        window.setTimeout(callback, 1000 / 60);
-      };
-  })();
-}
-
 function lerp(v0, v1, t) {
   return v0 * (1 - t) + v1 * t
 }
@@ -248,5 +220,45 @@ function FpsCtrl(fps, callback) {
       time = null;
       frame = -1;
     }
+  };
+}
+
+// === iOS Compatibility
+
+if (!('performance' in window)) {
+  const offset = Date.now()
+  window.performance = {
+    now: () => Date.now() - offset
+  }
+}
+
+if (!Math.sign) {
+  Math.sign = function (value) {
+    if (value >= 0) { return 1 }
+    else return -1;
+  }
+}
+
+if (!window.requestAnimationFrame) {
+  window.requestAnimationFrame = (function () {
+    return window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.oRequestAnimationFrame ||
+      window.msRequestAnimationFrame ||
+      function (callback, element) {
+        window.setTimeout(callback, 1000 / 60);
+      };
+  })();
+}
+
+if (!Object.entries) {
+  Object.entries = function (obj) {
+    var ownProps = Object.keys(obj),
+      i = ownProps.length,
+      resArray = new Array(i); // preallocate the Array
+
+    while (i--)
+      resArray[i] = [ownProps[i], obj[ownProps[i]]];
+    return resArray;
   };
 }
