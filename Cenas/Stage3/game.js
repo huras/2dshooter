@@ -262,7 +262,7 @@ class GameEngine {
           { id: 2, color: { r: 0, g: 0, b: 0 }, position: 0.4 },
           { id: 3, color: { r: 10, g: 0, b: 17 }, position: 0.6 },
           { id: 4, color: { r: 10, g: 0, b: 17 }, position: 0.8 },
-          { id: 5, color: { r: 22, g: 0, b: 37 }, position: 1 },          
+          { id: 5, color: { r: 22, g: 0, b: 37 }, position: 1 },
         ]
       },
       {
@@ -273,7 +273,7 @@ class GameEngine {
           { id: 2, color: { r: 33, g: 0, b: 57 }, position: 0.4 },
           { id: 3, color: { r: 44, g: 0, b: 75 }, position: 0.6 },
           { id: 4, color: { r: 50, g: 0, b: 85 }, position: 0.8 },
-          { id: 5, color: { r: 52, g: 0, b: 89 }, position: 1 },          
+          { id: 5, color: { r: 52, g: 0, b: 89 }, position: 1 },
         ]
       },
       {
@@ -284,7 +284,7 @@ class GameEngine {
           { id: 2, color: { r: 96, g: 0, b: 164 }, position: 0.4 },
           { id: 3, color: { r: 107, g: 0, b: 184 }, position: 0.6 },
           { id: 4, color: { r: 118, g: 0, b: 203 }, position: 0.8 },
-          { id: 5, color: { r: 132, g: 0, b: 226 }, position: 1 },          
+          { id: 5, color: { r: 132, g: 0, b: 226 }, position: 1 },
         ]
       },
     ], this.canvas, this.ctx);
@@ -465,6 +465,9 @@ class GameEngine {
         var checkpointValue = "", generateCheckpointValue = undefined;
         var possibilities = [];
 
+        var param1Pushed = false;
+        var param2Pushed = false;
+
         const tryPushParams = () => {
           const tryPushParam1 = () => {
             if (this.stageBuilder.currentCheckpoints.param1 == false && !param1Pushed) {
@@ -479,7 +482,6 @@ class GameEngine {
               })
             }
           }
-          var param1Pushed = false;
           tryPushParam1();
 
           const tryPushParam2 = () => {
@@ -494,7 +496,6 @@ class GameEngine {
               })
             }
           }
-          var param2Pushed = false;
           tryPushParam2();
         }
 

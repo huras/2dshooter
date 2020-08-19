@@ -267,7 +267,7 @@ class GameEngine {
           { id: 4, color: { r: 33, g: 148, b: 214 }, position: 0.6 },
           { id: 5, color: { r: 8, g: 132, b: 206 }, position: 1 },
         ]
-      },      
+      },
       {
         keyframe: 5500,
         points: [
@@ -278,7 +278,7 @@ class GameEngine {
           { id: 4, color: { r: 55, g: 0, b: 133 }, position: 0.81 },
           { id: 5, color: { r: 39, g: 0, b: 99 }, position: 1 },
         ]
-      },    
+      },
     ], this.canvas, this.ctx);
 
     this.cloudFall = new ParticleFall({
@@ -479,6 +479,9 @@ class GameEngine {
         var checkpointValue = "", generateCheckpointValue = undefined;
         var possibilities = [];
 
+        var param1Pushed = false;
+        var param2Pushed = false;
+
         const tryPushParams = () => {
           const tryPushParam1 = () => {
             if (this.stageBuilder.currentCheckpoints.param1 == false && !param1Pushed) {
@@ -493,7 +496,6 @@ class GameEngine {
               })
             }
           }
-          var param1Pushed = false;
           tryPushParam1();
 
           const tryPushParam2 = () => {
@@ -508,7 +510,6 @@ class GameEngine {
               })
             }
           }
-          var param2Pushed = false;
           tryPushParam2();
         }
 
