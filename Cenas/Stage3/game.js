@@ -558,9 +558,9 @@ class GameEngine {
 
         const param1 = this.stageBuilder.currentCheckpoints.param1;
         const param2 = this.stageBuilder.currentCheckpoints.param2;
-        const expectedAnswer = engine.divisionAnswer;
+        const expectedAnswer = param2 / param1;
 
-        this.stageBuilder.expectedAnswer = engine.divisionAnswer;
+        this.stageBuilder.expectedAnswer = expectedAnswer;
 
         var resultPool = [];
         stage.objects.map(obj => {
@@ -580,11 +580,11 @@ class GameEngine {
             }
             else {
               const options = [];
-              const candidates = []
-              candidates.push(param1 + engine.divisionAnswer);
-              candidates.push(Math.abs(param1 - engine.divisionAnswer));
-              candidates.push(Math.floor(param1 + (engine.divisionAnswer * 1.5)));
-              if (engine.divisionAnswer == param1)
+              const candidates = [];
+              candidates.push(param1 + expectedAnswer);
+              candidates.push(Math.abs(param1 - expectedAnswer));
+              candidates.push(Math.floor(param1 + (expectedAnswer * 1.5)));
+              if (expectedAnswer == param1)
                 candidates.push(randomInt(3, 5));
               candidates.map(c => {
                 if (c == 0)
@@ -593,9 +593,14 @@ class GameEngine {
                   options.push(c);
                 }
               })
+              const limit = 10;
+              var tries = 0;
               var newWrongAnswer = undefined;
               do {
                 newWrongAnswer = options[randomInt(0, options.length)];
+                tries++;
+                if (tries >= limit)
+                  candidates.push(randomInt(1, 100));
               } while (newWrongAnswer == expectedAnswer || usedWrongAnswers.indexOf(newWrongAnswer) != -1)
               usedWrongAnswers.push(newWrongAnswer);
               obj.properties.checkpointValue = newWrongAnswer;
@@ -763,373 +768,355 @@ class GameEngine {
     this.frag = new FragManager();
     this.heartHUD = new HeartHUD(5, ['#vida1', '#vida2', '#vida3', '#vida4', '#vida5'], args => { onGameOver() }, 5); // this.heartHUD = new HeartHUD(3, ['#vida1', '#vida2', '#vida3']);
     this.acertosHUD = new AcertosHUD('.q-slot', 0, () => { this.onWinGame(); })
-    this.rocketCounterHUD = new RocketCounterHUD('#rocket-counter', 3); //Contador regressivo
+    is.heartHUD = new HeartHUD(5, ['#vida1', '#vida2', '#vida3', '#vida4', '#vida5'], args => { onGameOver() }, 5); // this.heartHUD = new HeartHUD(3, ['#vida1', '#vida2', '#vida3']);
+    this.acertosHUD = new AcertosHUD('.q-slot', 5, () => { this.onWinGame(); })
+    urrentTime = 0;
+    sounds.sfx.rightAnswer.play();
+    sounds.sfx.rightAnswer.muted = false;
+  }
+}
+const onErrarQuestao = (answerGiven, rightAnswer, questionString, itemCollected) => {
+  this.frag.incluirErro({
+    questionString: questionString,
+    rightAnswer: rightAnswer,
+    answerGiven: answerGiven
+  });
 
-    // === Eventos importantes no jogo
-    const onAcertarQuestao = (answerGiven, rightAnswer, questionString) => {
-      this.frag.incluirAcerto({
-        questionString: questionString,
-        rightAnswer: rightAnswer,
-        answerGiven: answerGiven
-      });
+  // this.acertosHUD.pushWrongQuestion();
+  this.stageBuilder.chooseNextChallenge();
+  // if (itemCollected.allResults) {
+  // itemCollected.properties.allResults.map(result => {
+  //   // console.log(;
+  //   // result.destroy(result);
+  //   // result.properties.forceNoRender = true;
 
-      this.acertosHUD.pushRightQuestion();
-      // this.heartHUD.applyDamage(-1);
+  //   // result.y -= 150;
+  //   // result.properties.xaimba = 'U'
+  //   // result.mustRender = false;
+  //   // result.activeCollider = false;
+  // })
+  // // console.log(itemCollected);
+  // console.log('==========================');
+  // }
 
-      this.stageBuilder.param2Range.splice(this.stageBuilder.param2Range.indexOf(answerGiven), 1);
-      this.stageBuilder.resetCheckpointCounter();
-      this.stageBuilder.chooseNextChallenge();
+  this.heartHUD.applyDamage(1);
+  this.heartHUD.updateHUD();
 
-      this.acertosHUD.updateHUD();
+  this.layoutManager.estado = 'challenge';
 
-      if (sounds.sfx.rightAnswer) { // Dá play num som
-        sounds.sfx.rightAnswer.currentTime = 0;
-        sounds.sfx.rightAnswer.play();
-        sounds.sfx.rightAnswer.muted = false;
+  if (sounds.sfx.wrongAnswer) { // Dá play num som
+    sounds.sfx.wrongAnswer.currentTime = 0;
+    sounds.sfx.wrongAnswer.play();
+    sounds.sfx.wrongAnswer.muted = false;
+  }
+}
+const onColetarCrystal = (crystalValue, col) => {
+  col.mustRender = true;
+  col.activeCollider = false;
+  const icon = document.querySelector('#crystal-icon');
+  var clientRectangle = icon.getBoundingClientRect();
+  col.animateToCounter = {
+    rect: clientRectangle,
+    speed: 10,
+  };
+
+  // consolelog('frag change:', this.frag);
+
+  // console.log(clientRectangle); //or left, right, bottom
+
+  switch (crystalValue) {
+    case 1:
+      this.crystalCounter.increase(1);
+
+      if (sounds.sfx.crystalPickup) {
+        sounds.sfx.crystalPickup.currentTime = 0;
+        sounds.sfx.crystalPickup.play();
+        sounds.sfx.crystalPickup.muted = false;
+        sounds.sfx.crystalPickup.volume = 0.35;
       }
-    }
-    const onErrarQuestao = (answerGiven, rightAnswer, questionString, itemCollected) => {
-      this.frag.incluirErro({
-        questionString: questionString,
-        rightAnswer: rightAnswer,
-        answerGiven: answerGiven
-      });
+      break;
+    case 5:
+      this.crystalCounter.increase(5);
 
-      // this.acertosHUD.pushWrongQuestion();
-      this.stageBuilder.chooseNextChallenge();
-      // if (itemCollected.allResults) {
-      // itemCollected.properties.allResults.map(result => {
-      //   // console.log(;
-      //   // result.destroy(result);
-      //   // result.properties.forceNoRender = true;
-
-      //   // result.y -= 150;
-      //   // result.properties.xaimba = 'U'
-      //   // result.mustRender = false;
-      //   // result.activeCollider = false;
-      // })
-      // // console.log(itemCollected);
-      // console.log('==========================');
-      // }
-
-      this.heartHUD.applyDamage(1);
-      this.heartHUD.updateHUD();
-
-      this.layoutManager.estado = 'challenge';
-
-      if (sounds.sfx.wrongAnswer) { // Dá play num som
-        sounds.sfx.wrongAnswer.currentTime = 0;
-        sounds.sfx.wrongAnswer.play();
-        sounds.sfx.wrongAnswer.muted = false;
+      if (sounds.sfx.safiraPickup) {
+        sounds.sfx.safiraPickup.currentTime = 0;
+        sounds.sfx.safiraPickup.play();
+        sounds.sfx.safiraPickup.muted = false;
+        sounds.sfx.safiraPickup.volume = 0.45;
       }
-    }
-    const onColetarCrystal = (crystalValue, col) => {
-      col.mustRender = true;
-      col.activeCollider = false;
-      const icon = document.querySelector('#crystal-icon');
-      var clientRectangle = icon.getBoundingClientRect();
-      col.animateToCounter = {
-        rect: clientRectangle,
-        speed: 10,
-      };
+      break;
 
-      // consolelog('frag change:', this.frag);
-
-      // console.log(clientRectangle); //or left, right, bottom
-
-      switch (crystalValue) {
-        case 1:
-          this.crystalCounter.increase(1);
-
-          if (sounds.sfx.crystalPickup) {
-            sounds.sfx.crystalPickup.currentTime = 0;
-            sounds.sfx.crystalPickup.play();
-            sounds.sfx.crystalPickup.muted = false;
-            sounds.sfx.crystalPickup.volume = 0.35;
-          }
-          break;
-        case 5:
-          this.crystalCounter.increase(5);
-
-          if (sounds.sfx.safiraPickup) {
-            sounds.sfx.safiraPickup.currentTime = 0;
-            sounds.sfx.safiraPickup.play();
-            sounds.sfx.safiraPickup.muted = false;
-            sounds.sfx.safiraPickup.volume = 0.45;
-          }
-          break;
-
-        default:
-          break;
-      }
-
-
-    }
-    const onColetarCheckpoint = (checkpointValue, col) => {
-
-    }
-    const onGameOver = () => {
-      engineLife++;
-      this.ceu.mayRise = false;
-      this.spaceship.turnedOn = false;
-      this.layoutManager.mayRise = false;
-
-      document.querySelector('.gameover-screen').style.display = 'flex'; //Exibe tela de gameover
-
-      // Checa se jogador tem dinheiro o suficiente para reviver
-      if (this.crystalCounter.counter < revivePrice) {
-        document.querySelector(".continuar-button").style.display = 'none'
-      } else {
-        document.querySelector(".continuar-button").style.display = 'flex'
-      }
-
-      // sounds.sfx.nakaOST.play();
-      // this.engineSoundOn = false;
-    }
-    this.onPauseGame = () => {
-      this.gamepaused = true;
-      // console.log('pause')
-      document.querySelector('.pause-btn').style.display = 'none'; //Bloqueia botão de pausa
-      document.querySelector('.pause-screen').style.display = 'flex'; //Exibe tela de pausa
-
-      setRising(false)
-    }
-    this.onUnpauseGame = () => {
-      this.gamepaused = false;
-      // console.log('unpause')
-      document.querySelector('.pause-btn').style.display = 'flex'; //Libera botão de pausa
-      document.querySelector('.pause-screen').style.display = 'none'; //Esconde tela de pausa
-
-      setRising(true)
-    }
-    this.onWinGame = () => {
-      document.querySelector('.result-screen').style.display = 'flex'; //Exibe a tela de resultado
-
-      // var percentage = (this.acertosHUD.slots.length + this.heartHUD.hearts) / (this.acertosHUD.slots.length + this.heartHUD.maxHearts)
-      var percentage = this.frag.getPercentage();
-      document.querySelector('#nota-final').innerHTML = percentage.toFixed(0) + '%';
-
-      console.log("You're a win!");
-      setRising(false);
-    }
-    this.tryToBuyRevive = () => {
-      if (this.crystalCounter.counter >= revivePrice) {
-        this.crystalCounter.decrease(revivePrice);
-        this.onRevive();
-      }
-    }
-    this.onRevive = () => {
-      this.heartHUD.recoverDamage(3);
-      document.querySelector('.gameover-screen').style.display = 'none'; //Exibe tela de gameover
-      setRising(true)
-    }
-    this.onResetGame = () => {
-      // document.querySelector('.result-screen').style.display = 'none'; //Esconde a tela de resultado
-      this.closeAllScreens();
-      this.firstFrame();
-    }
-    this.closeAllScreens = () => {
-      document.querySelector('.pause-screen').style.display = 'none'; //Esconde tela
-      document.querySelector('.gameover-screen').style.display = 'none';
-      document.querySelector('.result-screen').style.display = 'none';
-      document.querySelector('.menu-screen').style.display = 'none';
-    }
-    this.irParaMenuPrincipal = () => {
-      this.hasGameloop = false;
-      onGameOver();
-      this.onPauseGame();
-      this.changeState(engineStates.WAITING_NEW_SCENE);
-      this.closeAllScreens();
-      document.querySelector('.menu-screen').style.display = 'flex'; //Esconde tela de menu
-    }
-
-    var setRising = (boolean = true) => {
-      this.spaceship.turnedOn = boolean;
-      this.ceu.mayRise = boolean;
-      this.layoutManager.mayRise = boolean;
-    }
-    this.spaceship.turnedOn = true;
-    this.ceu.mayRise = true;
-
-    // =========================== Filminho inicial
-    var lancarFoguete = () => {
-      setTimeout(() => {
-        document.querySelector('.pause-btn').style.display = 'flex';
-        document.querySelector('.info-btn').style.display = 'flex';
-        setRising(true)
-        this.spaceship.keepPosition = true;
-        this.onUnpauseGame();
-        // sounds.sfx.nakaOST.play();
-        this.engineSoundOn = true;
-      }, 100);
-    }
-    var filminhoInicial = () => {
-      if (this.layoutManager.hasLoaded) {
-        console.log('filminhoInicial');
-        this.rocketCounterHUD.start(() => {
-          lancarFoguete();
-        })
-      } else {
-        setTimeout(() => {
-          filminhoInicial();
-        }, 10);
-      }
-    }
-    filminhoInicial();
+    default:
+      break;
   }
 
-  update(deltaTime) {
-    // console.log(this.currentScene)
-    this.generalScale = 1;
-    this.layoutIsMobile = window.mobileAndTabletCheck();
 
-    if (this.currentScene == 'fase1') {
-      // Define number of Lanes for Layout
-      // Advance or Generate Layout
-      if (this.gamepaused != true) {
-        if (this.analogic && this.analogic.draging) {
-          this.spaceship.readTouchMovimentation(this.analogic);
-        } else {
-          this.spaceship.readMovimentation(this.inputManager, { up: InputManager.Keys.Up_Arrow, left: InputManager.Keys.Left_Arrow, right: InputManager.Keys.Right_Arrow, down: InputManager.Keys.Down_Arrow }) //Update Ship Movimentation By Keys
-        }
-        this.spaceship.fisica(deltaTime);
+}
+const onColetarCheckpoint = (checkpointValue, col) => {
 
+}
+const onGameOver = () => {
+  engineLife++;
+  this.ceu.mayRise = false;
+  this.spaceship.turnedOn = false;
+  this.layoutManager.mayRise = false;
 
-        //Update Colliders
-        if (this.spaceship.rectCollider) {
-          var collisions = this.layoutManager.checkcollision(this.spaceship.rectCollider); //Check Ship Collisions with Collectibles and Checkpoints      
-          collisions.map(col => {
-            if (!col.oncollect(col)) {
-              col.mustRender = false;
-              col.activeCollider = false;
-            }
-          })
-        }
-        //Check Ship Collisions with Hazards
-        //Check Ship Collisions with Colliders
-        if (this.crystalCounter)
-          this.crystalCounter.updateHUD();
-      }
+  document.querySelector('.gameover-screen').style.display = 'flex'; //Exibe tela de gameover
 
-      this.engineAudioLoop(); //Control Ship Sound
-
-      this.tryRenderThings();
-    }
+  // Checa se jogador tem dinheiro o suficiente para reviver
+  if (this.crystalCounter.counter < revivePrice) {
+    document.querySelector(".continuar-button").style.display = 'none'
+  } else {
+    document.querySelector(".continuar-button").style.display = 'flex'
   }
 
-  tryRenderThings() {
-    //Draw Cenario
-    this.ceu.render(); // Sky BG    
-    this.cloudFall.render(); //Clouds
-    //Draw Enfeites    
-    this.spaceship.drawNave(); //Draw Spaceship
-    this.layoutManager.render(); //Draw Stage Layout
-    //Obstacles 
-    //Pickups    
-    //Draw Equation Progress
-    //Draw Score
-    // this.DesenhaFPS();
+  // sounds.sfx.nakaOST.play();
+  // this.engineSoundOn = false;
+}
+this.onPauseGame = () => {
+  this.gamepaused = true;
+  // console.log('pause')
+  document.querySelector('.pause-btn').style.display = 'none'; //Bloqueia botão de pausa
+  document.querySelector('.pause-screen').style.display = 'flex'; //Exibe tela de pausa
 
-    this.analogic.render();
+  setRising(false)
+}
+this.onUnpauseGame = () => {
+  this.gamepaused = false;
+  // console.log('unpause')
+  document.querySelector('.pause-btn').style.display = 'flex'; //Libera botão de pausa
+  document.querySelector('.pause-screen').style.display = 'none'; //Esconde tela de pausa
+
+  setRising(true)
+}
+this.onWinGame = () => {
+  document.querySelector('.result-screen').style.display = 'flex'; //Exibe a tela de resultado
+
+  // var percentage = (this.acertosHUD.slots.length + this.heartHUD.hearts) / (this.acertosHUD.slots.length + this.heartHUD.maxHearts)
+  var percentage = this.frag.getPercentage();
+  document.querySelector('#nota-final').innerHTML = percentage.toFixed(0) + '%';
+
+  console.log("You're a win!");
+  setRising(false);
+}
+this.tryToBuyRevive = () => {
+  if (this.crystalCounter.counter >= revivePrice) {
+    this.crystalCounter.decrease(revivePrice);
+    this.onRevive();
   }
+}
+this.onRevive = () => {
+  this.heartHUD.recoverDamage(3);
+  document.querySelector('.gameover-screen').style.display = 'none'; //Exibe tela de gameover
+  setRising(true)
+}
+this.onResetGame = () => {
+  // document.querySelector('.result-screen').style.display = 'none'; //Esconde a tela de resultado
+  this.closeAllScreens();
+  this.firstFrame();
+}
+this.closeAllScreens = () => {
+  document.querySelector('.pause-screen').style.display = 'none'; //Esconde tela
+  document.querySelector('.gameover-screen').style.display = 'none';
+  document.querySelector('.result-screen').style.display = 'none';
+  document.querySelector('.menu-screen').style.display = 'none';
+}
+this.irParaMenuPrincipal = () => {
+  this.hasGameloop = false;
+  onGameOver();
+  this.onPauseGame();
+  this.changeState(engineStates.WAITING_NEW_SCENE);
+  this.closeAllScreens();
+  document.querySelector('.menu-screen').style.display = 'flex'; //Esconde tela de menu
+}
 
-  DesenhaFPS() {
-    var fontSize = 36;
-    this.ctx.font = fontSize + "px sans-serif";
-    this.ctx.textBaseline = "middle";
-    this.ctx.textAlign = "left";
-    this.ctx.fillStyle = "#FFFFFF";
-    this.ctx.strokeStyle = "#000000";
-    this.ctx.lineWidth = 1;
+var setRising = (boolean = true) => {
+  this.spaceship.turnedOn = boolean;
+  this.ceu.mayRise = boolean;
+  this.layoutManager.mayRise = boolean;
+}
+this.spaceship.turnedOn = true;
+this.ceu.mayRise = true;
 
-    var mediaFPS = 0;
-    var mediaDeltaTime = 0;
-
-    this.fpsBuffer.map(amostra => {
-      mediaFPS += amostra.fps;
-      mediaDeltaTime += amostra.deltaTime;
+// =========================== Filminho inicial
+var lancarFoguete = () => {
+  setTimeout(() => {
+    document.querySelector('.pause-btn').style.display = 'flex';
+    document.querySelector('.info-btn').style.display = 'flex';
+    setRising(true)
+    this.spaceship.keepPosition = true;
+    this.onUnpauseGame();
+    // sounds.sfx.nakaOST.play();
+    this.engineSoundOn = true;
+  }, 100);
+}
+var filminhoInicial = () => {
+  if (this.layoutManager.hasLoaded) {
+    console.log('filminhoInicial');
+    this.rocketCounterHUD.start(() => {
+      lancarFoguete();
     })
-
-    if (this.fpsBuffer.length > 0) {
-      mediaFPS = mediaFPS / this.fpsBuffer.length;
-      mediaDeltaTime = mediaDeltaTime / this.fpsBuffer.length;
-    }
-
-    // this.ctx.fillText(mediaFPS.toFixed(0) + ' FPS, ' + (mediaDeltaTime * 1000).toFixed(1) + 'ms, ', 15, 25, this.canvas.width);
-    // this.ctx.strokeText(mediaFPS.toFixed(0) + ' FPS, ' + (mediaDeltaTime * 1000).toFixed(1) + 'ms, ', 15, 25, this.canvas.width);
-
-    this.ctx.fillText(this.fps.toFixed(0) + ' FPS', 15, 25, this.canvas.width);
-    this.ctx.strokeText(this.fps.toFixed(0) + ' FPS', 15, 25, this.canvas.width);
+  } else {
+    setTimeout(() => {
+      filminhoInicial();
+    }, 10);
+  }
+}
+filminhoInicial();
   }
 
-  engineAudioLoop() {
-    if (this.engineSoundOn != true) {
-      return;
+update(deltaTime) {
+  // console.log(this.currentScene)
+  this.generalScale = 1;
+  this.layoutIsMobile = window.mobileAndTabletCheck();
+
+  if (this.currentScene == 'fase1') {
+    // Define number of Lanes for Layout
+    // Advance or Generate Layout
+    if (this.gamepaused != true) {
+      if (this.analogic && this.analogic.draging) {
+        this.spaceship.readTouchMovimentation(this.analogic);
+      } else {
+        this.spaceship.readMovimentation(this.inputManager, { up: InputManager.Keys.Up_Arrow, left: InputManager.Keys.Left_Arrow, right: InputManager.Keys.Right_Arrow, down: InputManager.Keys.Down_Arrow }) //Update Ship Movimentation By Keys
+      }
+      this.spaceship.fisica(deltaTime);
+
+
+      //Update Colliders
+      if (this.spaceship.rectCollider) {
+        var collisions = this.layoutManager.checkcollision(this.spaceship.rectCollider); //Check Ship Collisions with Collectibles and Checkpoints      
+        collisions.map(col => {
+          if (!col.oncollect(col)) {
+            col.mustRender = false;
+            col.activeCollider = false;
+          }
+        })
+      }
+      //Check Ship Collisions with Hazards
+      //Check Ship Collisions with Colliders
+      if (this.crystalCounter)
+        this.crystalCounter.updateHUD();
     }
-    if (!this.engineCounter) {
-      this.engineCounter = 0;
+
+    this.engineAudioLoop(); //Control Ship Sound
+
+    this.tryRenderThings();
+  }
+}
+
+tryRenderThings() {
+  //Draw Cenario
+  this.ceu.render(); // Sky BG    
+  this.cloudFall.render(); //Clouds
+  //Draw Enfeites    
+  this.spaceship.drawNave(); //Draw Spaceship
+  this.layoutManager.render(); //Draw Stage Layout
+  //Obstacles 
+  //Pickups    
+  //Draw Equation Progress
+  //Draw Score
+  // this.DesenhaFPS();
+
+  this.analogic.render();
+}
+
+DesenhaFPS() {
+  var fontSize = 36;
+  this.ctx.font = fontSize + "px sans-serif";
+  this.ctx.textBaseline = "middle";
+  this.ctx.textAlign = "left";
+  this.ctx.fillStyle = "#FFFFFF";
+  this.ctx.strokeStyle = "#000000";
+  this.ctx.lineWidth = 1;
+
+  var mediaFPS = 0;
+  var mediaDeltaTime = 0;
+
+  this.fpsBuffer.map(amostra => {
+    mediaFPS += amostra.fps;
+    mediaDeltaTime += amostra.deltaTime;
+  })
+
+  if (this.fpsBuffer.length > 0) {
+    mediaFPS = mediaFPS / this.fpsBuffer.length;
+    mediaDeltaTime = mediaDeltaTime / this.fpsBuffer.length;
+  }
+
+  // this.ctx.fillText(mediaFPS.toFixed(0) + ' FPS, ' + (mediaDeltaTime * 1000).toFixed(1) + 'ms, ', 15, 25, this.canvas.width);
+  // this.ctx.strokeText(mediaFPS.toFixed(0) + ' FPS, ' + (mediaDeltaTime * 1000).toFixed(1) + 'ms, ', 15, 25, this.canvas.width);
+
+  this.ctx.fillText(this.fps.toFixed(0) + ' FPS', 15, 25, this.canvas.width);
+  this.ctx.strokeText(this.fps.toFixed(0) + ' FPS', 15, 25, this.canvas.width);
+}
+
+engineAudioLoop() {
+  if (this.engineSoundOn != true) {
+    return;
+  }
+  if (!this.engineCounter) {
+    this.engineCounter = 0;
+    // sounds.sfx.engineloop1.play();
+    // sounds.sfx.engineloop2.play();
+    // sounds.sfx.engineloop1.onended = (event) => {
+    //   sounds.sfx.engineloop1.play();
+    // }
+    // sounds.sfx.engineloop2.onended = (event) => {
+    //   sounds.sfx.engineloop2.play();
+    // }
+  }
+
+  const generalRocketSound = 0.15;
+  var isPlaying = function (myaudio) {
+    return myaudio
+      && myaudio.currentTime > 0
+      && !myaudio.paused
+      && !myaudio.ended
+      && myaudio.readyState > 2;
+  }
+  if (!isPlaying(sounds.sfx.engineloop1)) {
+    // console.log('play!', sounds.sfx.engineloop1)
+    // if (Math.abs(this.spaceship.speed.x) > 0.5) {
+    if (sounds.sfx.engineloop1.currentTime > 0.6) {
+      sounds.sfx.engineloop1.currentTime = 0;
       // sounds.sfx.engineloop1.play();
-      // sounds.sfx.engineloop2.play();
-      // sounds.sfx.engineloop1.onended = (event) => {
-      //   sounds.sfx.engineloop1.play();
-      // }
-      // sounds.sfx.engineloop2.onended = (event) => {
-      //   sounds.sfx.engineloop2.play();
-      // }
+      sounds.sfx.engineloop1.muted = false;
+      sounds.sfx.engineloop1.volume = 0.5;
     }
+    // }
 
-    const generalRocketSound = 0.15;
-    var isPlaying = function (myaudio) {
-      return myaudio
-        && myaudio.currentTime > 0
-        && !myaudio.paused
-        && !myaudio.ended
-        && myaudio.readyState > 2;
-    }
-    if (!isPlaying(sounds.sfx.engineloop1)) {
-      // console.log('play!', sounds.sfx.engineloop1)
-      // if (Math.abs(this.spaceship.speed.x) > 0.5) {
-      if (sounds.sfx.engineloop1.currentTime > 0.6) {
-        sounds.sfx.engineloop1.currentTime = 0;
-        // sounds.sfx.engineloop1.play();
-        sounds.sfx.engineloop1.muted = false;
-        sounds.sfx.engineloop1.volume = 0.5;
-      }
-      // }
-
-      if (!sounds.sfx.engineloop2.hasPlayedFirstTime && !sounds.sfx.engineloop2.hasPlayedFirstTimePromisse) {
-        sounds.sfx.engineloop2.hasPlayedFirstTimePromisse = true;
-        setTimeout(() => {
-          sounds.sfx.engineloop2.hasPlayedFirstTime = true;
-          sounds.sfx.engineloop2.currentTime = 0;
-          // sounds.sfx.engineloop2.play();
-          sounds.sfx.engineloop2.muted = false;
-          sounds.sfx.engineloop2.loop = true;
-        }, sounds.sfx.engineloop1 * 0.5 * 1000 * 456789)
-      }
-    }
-
-    if (sounds.sfx.engineloop2.hasPlayedFirstTime) {
-      // if (this.spaceship.speed.y <= -0.05) {
-      if (sounds.sfx.engineloop2.currentTime > 0.6) {
+    if (!sounds.sfx.engineloop2.hasPlayedFirstTime && !sounds.sfx.engineloop2.hasPlayedFirstTimePromisse) {
+      sounds.sfx.engineloop2.hasPlayedFirstTimePromisse = true;
+      setTimeout(() => {
+        sounds.sfx.engineloop2.hasPlayedFirstTime = true;
         sounds.sfx.engineloop2.currentTime = 0;
         // sounds.sfx.engineloop2.play();
-      }
-      // }
+        sounds.sfx.engineloop2.muted = false;
+        sounds.sfx.engineloop2.loop = true;
+      }, sounds.sfx.engineloop1 * 0.5 * 1000 * 456789)
     }
-
-    // sounds.sfx.engineloop2.play();
-    sounds.sfx.engineloop1.volume = Math.abs((Math.cos(degrees_to_radians((this.engineCounter % 360))) + 1)) * 0.15 * generalRocketSound;
-    // sounds.sfx.engineloop1.volume = 0;
-    sounds.sfx.engineloop2.volume = 0.5 * generalRocketSound;
-    // sounds.sfx.engineloop2.volume = 0;
-
-    const speedXRate = (Math.abs(this.spaceship.speed.x) / this.spaceship.maxSpeed.x) * 0.6;
-    sounds.sfx.engineloop1.volume += sounds.sfx.engineloop1.volume * speedXRate;
-    sounds.sfx.engineloop2.volume += sounds.sfx.engineloop2.volume * speedXRate;
-
-    this.engineCounter += Math.PI;
   }
+
+  if (sounds.sfx.engineloop2.hasPlayedFirstTime) {
+    // if (this.spaceship.speed.y <= -0.05) {
+    if (sounds.sfx.engineloop2.currentTime > 0.6) {
+      sounds.sfx.engineloop2.currentTime = 0;
+      // sounds.sfx.engineloop2.play();
+    }
+    // }
+  }
+
+  // sounds.sfx.engineloop2.play();
+  sounds.sfx.engineloop1.volume = Math.abs((Math.cos(degrees_to_radians((this.engineCounter % 360))) + 1)) * 0.15 * generalRocketSound;
+  // sounds.sfx.engineloop1.volume = 0;
+  sounds.sfx.engineloop2.volume = 0.5 * generalRocketSound;
+  // sounds.sfx.engineloop2.volume = 0;
+
+  const speedXRate = (Math.abs(this.spaceship.speed.x) / this.spaceship.maxSpeed.x) * 0.6;
+  sounds.sfx.engineloop1.volume += sounds.sfx.engineloop1.volume * speedXRate;
+  sounds.sfx.engineloop2.volume += sounds.sfx.engineloop2.volume * speedXRate;
+
+  this.engineCounter += Math.PI;
+}
   // ==================================
 }
 

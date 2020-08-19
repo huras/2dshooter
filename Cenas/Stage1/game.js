@@ -427,15 +427,15 @@ class GameEngine {
     });
 
     const initialCheckpoints = {
-      // param1: 1,
-      // operation: '÷',
-      // param2: 1,
-      // readyToBeSolved: '=',
+      param1: 6,
+      param2: 36,
+      operation: '÷',
+      readyToBeSolved: '=',
 
-      param1: false,
-      operation: false,
-      param2: false,
-      readyToBeSolved: false
+      // param1: false,
+      // param2: false,
+      // operation: false,
+      // readyToBeSolved: false
     }
 
     this.stageBuilder = new ChallengeDynamicBuilder({
@@ -572,9 +572,9 @@ class GameEngine {
 
         const param1 = this.stageBuilder.currentCheckpoints.param1;
         const param2 = this.stageBuilder.currentCheckpoints.param2;
-        const expectedAnswer = engine.divisionAnswer;
+        const expectedAnswer = param2 / param1;
 
-        this.stageBuilder.expectedAnswer = engine.divisionAnswer;
+        this.stageBuilder.expectedAnswer = expectedAnswer;
 
         var resultPool = [];
         stage.objects.map(obj => {
@@ -594,11 +594,11 @@ class GameEngine {
             }
             else {
               const options = [];
-              const candidates = []
-              candidates.push(param1 + engine.divisionAnswer);
-              candidates.push(Math.abs(param1 - engine.divisionAnswer));
-              candidates.push(Math.floor(param1 + (engine.divisionAnswer * 1.5)));
-              if (engine.divisionAnswer == param1)
+              const candidates = [];
+              candidates.push(param1 + expectedAnswer);
+              candidates.push(Math.abs(param1 - expectedAnswer));
+              candidates.push(Math.floor(param1 + (expectedAnswer * 1.5)));
+              if (expectedAnswer == param1)
                 candidates.push(randomInt(3, 5));
               candidates.map(c => {
                 if (c == 0)
@@ -607,9 +607,14 @@ class GameEngine {
                   options.push(c);
                 }
               })
+              const limit = 10;
+              var tries = 0;
               var newWrongAnswer = undefined;
               do {
                 newWrongAnswer = options[randomInt(0, options.length)];
+                tries++;
+                if (tries >= limit)
+                  candidates.push(randomInt(1, 100));
               } while (newWrongAnswer == expectedAnswer || usedWrongAnswers.indexOf(newWrongAnswer) != -1)
               usedWrongAnswers.push(newWrongAnswer);
               obj.properties.checkpointValue = newWrongAnswer;
