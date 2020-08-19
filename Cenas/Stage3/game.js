@@ -415,13 +415,13 @@ class GameEngine {
     const initialCheckpoints = {
       // param1: 2,
       // param2: 2,
-      operation: 'x',
-      readyToBeSolved: '=',
+      // operation: 'x',
+      // readyToBeSolved: '=',
 
       param1: false,
       param2: false,
-      // operation: false,
-      // readyToBeSolved: false
+      operation: false,
+      readyToBeSolved: false
     }
 
     this.stageBuilder = new ChallengeDynamicBuilder({
@@ -469,6 +469,7 @@ class GameEngine {
         var param2Pushed = false;
 
         const tryPushParams = () => {
+          possibilities = [];
           const tryPushParam1 = () => {
             if (this.stageBuilder.currentCheckpoints.param1 == false && !param1Pushed) {
               param1Pushed = true;
@@ -497,24 +498,24 @@ class GameEngine {
             }
           }
           tryPushParam2();
+
+          if (this.stageBuilder.currentCheckpoints.operation == false) {
+            possibilities.push(() => {
+              generateCheckpointValue = (myObj) => {
+                myObj.properties.checkpointValue = "÷";
+              }
+            })
+          }
+          if (this.stageBuilder.currentCheckpoints.readyToBeSolved == false) {
+            possibilities.push(() => {
+              generateCheckpointValue = (myObj) => {
+                myObj.properties.checkpointValue = "=";
+              }
+            })
+          }
         }
 
         tryPushParams();
-
-        if (this.stageBuilder.currentCheckpoints.operation == false) {
-          possibilities.push(() => {
-            generateCheckpointValue = (myObj) => {
-              myObj.properties.checkpointValue = "÷";
-            }
-          })
-        }
-        if (this.stageBuilder.currentCheckpoints.readyToBeSolved == false) {
-          possibilities.push(() => {
-            generateCheckpointValue = (myObj) => {
-              myObj.properties.checkpointValue = "=";
-            }
-          })
-        }
 
         stage.objects.map(obj => {
           if (obj.properties.type == 'checkpoint') {
