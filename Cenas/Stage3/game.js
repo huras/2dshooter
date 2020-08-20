@@ -255,36 +255,44 @@ class GameEngine {
     // === Set Layout
     this.ceu = new BGGradiente([
       {
-        keyframe: 0, // 100 duration
+        firstFrame: true,
+        keyframe: 0,
         points: [
-          { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
-          { id: 1, color: { r: 0, g: 0, b: 0 }, position: 0.2 },
-          { id: 2, color: { r: 0, g: 0, b: 0 }, position: 0.4 },
-          { id: 3, color: { r: 10, g: 0, b: 17 }, position: 0.6 },
-          { id: 4, color: { r: 10, g: 0, b: 17 }, position: 0.8 },
-          { id: 5, color: { r: 22, g: 0, b: 37 }, position: 1 },
+          { id: 0, color: { r: 251, g: 29, b: 128 }, position: 0 },
+          { id: 1, color: { r: 246, g: 33, b: 137 }, position: 0.33 },
+          { id: 2, color: { r: 220, g: 35, b: 147 }, position: 1 },
         ]
       },
       {
-        keyframe: 3000, // 1000 duration
+        keyframe: 100,
         points: [
-          { id: 0, color: { r: 30, g: 0, b: 51 }, position: 0 },
-          { id: 1, color: { r: 30, g: 0, b: 51 }, position: 0.2 },
-          { id: 2, color: { r: 33, g: 0, b: 57 }, position: 0.4 },
-          { id: 3, color: { r: 44, g: 0, b: 75 }, position: 0.6 },
-          { id: 4, color: { r: 50, g: 0, b: 85 }, position: 0.8 },
-          { id: 5, color: { r: 52, g: 0, b: 89 }, position: 1 },
+          { id: 0, color: { r: 206, g: 35, b: 171 }, position: 0 },
+          { id: 1, color: { r: 197, g: 34, b: 197 }, position: 0.33 },
+          { id: 2, color: { r: 196, g: 34, b: 206 }, position: 1 },
         ]
       },
       {
-        keyframe: 4500, // 1000 duration
+        keyframe: 500,
         points: [
-          { id: 0, color: { r: 73, g: 0, b: 125 }, position: 0 },
-          { id: 1, color: { r: 79, g: 0, b: 136 }, position: 0.2 },
-          { id: 2, color: { r: 96, g: 0, b: 164 }, position: 0.4 },
-          { id: 3, color: { r: 107, g: 0, b: 184 }, position: 0.6 },
-          { id: 4, color: { r: 118, g: 0, b: 203 }, position: 0.8 },
-          { id: 5, color: { r: 132, g: 0, b: 226 }, position: 1 },
+          { id: 0, color: { r: 218, g: 36, b: 233 }, position: 0 },
+          { id: 1, color: { r: 205, g: 31, b: 247 }, position: 0.33 },
+          { id: 2, color: { r: 188, g: 35, b: 237 }, position: 1 },
+        ]
+      },
+      {
+        keyframe: 3000,
+        points: [
+          { id: 0, color: { r: 187, g: 34, b: 239 }, position: 0 },
+          { id: 1, color: { r: 110, g: 93, b: 137 }, position: 0.33 },
+          { id: 2, color: { r: 66, g: 54, b: 81 }, position: 1 },
+        ]
+      },
+      {
+        keyframe: 5000,
+        points: [
+          { id: 0, color: { r: 32, g: 26, b: 42 }, position: 0 },
+          { id: 1, color: { r: 5, g: 5, b: 11 }, position: 0.33 },
+          { id: 2, color: { r: 1, g: 1, b: 1 }, position: 1 },
         ]
       },
     ], this.canvas, this.ctx);
