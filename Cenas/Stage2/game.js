@@ -256,45 +256,62 @@ class GameEngine {
         firstFrame: true,
         keyframe: 0,
         points: [
-          { id: 0, color: { r: 200, g: 127, b: 247 }, position: 0 },
-          { id: 1, color: { r: 200, g: 127, b: 247 }, position: 0.14 },
-          { id: 2, color: { r: 184, g: 110, b: 244 }, position: 0.24 },
-          { id: 3, color: { r: 184, g: 110, b: 244 }, position: 0.34 },
-          { id: 4, color: { r: 167, g: 91, b: 236 }, position: 0.54 },
-          { id: 5, color: { r: 139, g: 67, b: 225 }, position: 0.65 },
-          { id: 6, color: { r: 117, g: 52, b: 213 }, position: 0.78 },
-          { id: 7, color: { r: 97, g: 42, b: 199 }, position: 0.88 },
-          { id: 8, color: { r: 97, g: 42, b: 199 }, position: 1 },
+          { id: 0, color: { r: 152, g: 0, b: 168 }, position: 0 },
+          { id: 1, color: { r: 136, g: 0, b: 167 }, position: 0.24 },
+          { id: 2, color: { r: 128, g: 0, b: 168 }, position: 0.8 },
+          { id: 3, color: { r: 120, g: 0, b: 126 }, position: 1 },
         ]
       },
       {
-        keyframe: 4000, //duration
+        keyframe: 2500, //duration
         points: [
-          { id: 0, color: { r: 69, g: 29, b: 175 }, position: 0 },
-          { id: 1, color: { r: 69, g: 29, b: 175 }, position: 0.14 },
-          { id: 2, color: { r: 51, g: 23, b: 154 }, position: 0.24 },
-          { id: 3, color: { r: 51, g: 23, b: 154 }, position: 0.34 },
-          { id: 4, color: { r: 35, g: 17, b: 127 }, position: 0.54 },
-          { id: 5, color: { r: 35, g: 17, b: 127 }, position: 0.65 },
-          { id: 6, color: { r: 25, g: 11, b: 106 }, position: 0.78 },
-          { id: 7, color: { r: 25, g: 11, b: 106 }, position: 0.88 },
-          { id: 8, color: { r: 18, g: 9, b: 88 }, position: 1 },
+          { id: 0, color: { r: 88, g: 0, b: 152 }, position: 0 },
+          { id: 1, color: { r: 72, g: 0, b: 144 }, position: 0.1 },
+          { id: 2, color: { r: 64, g: 0, b: 144 }, position: 0.3 },
+          { id: 3, color: { r: 56, g: 0, b: 144 }, position: 0.98 },
+        ],
+        onReach: () => {
+          this.cloudFall.generationParams.images = [estrela];
+          this.cloudFall.generationParams.scale = { min: 0.2, max: 1 };
+          this.cloudFall.generationParams.rotation = { min: -15, max: 15 };
+          this.cloudFall.generationParams.amount = 30;
+          this.cloudFall.generateBehaviour = (item, params) => {
+            console.log('qwer');
+            item.scale = (randomInt(5, 55) / 100) * (params.scale.max - params.scale.min) + params.scale.min;
+            item.rotation = (randomInt(0, 100) / 100) * (params.rotation.max - params.rotation.min) + params.rotation.min;
+            item.image = params.images[0];
+            item.alpha = (randomInt(50, 75) / 100);
+            item.speed = {
+              x: ((randomInt(0, 200) - 100) / 100) * 0.25 * (0.9 * item.scale),
+              y: (randomInt(75, 100) / 100) * (0.9 * item.scale)
+            }
+            item.position = {
+              x: (randomInt(0, 100) / 100) * this.canvas.width,
+              y: -this.canvas.height * randomInt(10, 100) / 100
+            };
+            item.pivot = { x: 0.5, y: 0.5 }
+            return item;
+          }
+        }
+      },
+      {
+        keyframe: 3000, //1000 duration
+        points: [
+          { id: 0, color: { r: 40, g: 0, b: 136 }, position: 0 },
+          { id: 1, color: { r: 32, g: 0, b: 136 }, position: 0.25 },
+          { id: 2, color: { r: 22, g: 0, b: 136 }, position: 0.5 },
+          { id: 3, color: { r: 12, g: 0, b: 136 }, position: 1 },
         ]
       },
       {
-        keyframe: 4500, //duration
+        keyframe: 3500, // 50 duration
         points: [
-          { id: 0, color: { r: 18, g: 6, b: 67 }, position: 0 },
-          { id: 1, color: { r: 3, g: 2, b: 33 }, position: 0.25 },
-          { id: 2, color: { r: 0, g: 1, b: 11 }, position: 0.5 },
-          { id: 3, color: { r: 0, g: 0, b: 0 }, position: 1 },
-          { id: 4, color: { r: 0, g: 0, b: 0 }, position: 1 },
-          { id: 5, color: { r: 0, g: 0, b: 0 }, position: 1 },
-          { id: 6, color: { r: 0, g: 0, b: 0 }, position: 1 },
-          { id: 7, color: { r: 0, g: 0, b: 0 }, position: 1 },
-          { id: 8, color: { r: 0, g: 0, b: 0 }, position: 1 },
+          { id: 0, color: { r: 8, g: 0, b: 120 }, position: 0 },
+          { id: 1, color: { r: 0, g: 0, b: 120 }, position: 0.25 },
+          { id: 2, color: { r: 0, g: 0, b: 112 }, position: 0.5 },
+          { id: 3, color: { r: 0, g: 0, b: 102 }, position: 1},
         ]
-      },
+      },     
     ], this.canvas, this.ctx);
 
     this.cloudFall = new ParticleFall({
