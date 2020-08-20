@@ -257,34 +257,28 @@ class GameEngine {
       {
         keyframe: 0, // 100 duration
         points: [
-          { id: 0, color: { r: 0, g: 0, b: 0 }, position: 0 },
-          { id: 1, color: { r: 0, g: 0, b: 0 }, position: 0.2 },
-          { id: 2, color: { r: 0, g: 0, b: 0 }, position: 0.4 },
-          { id: 3, color: { r: 10, g: 0, b: 17 }, position: 0.6 },
-          { id: 4, color: { r: 10, g: 0, b: 17 }, position: 0.8 },
-          { id: 5, color: { r: 22, g: 0, b: 37 }, position: 1 },
+          { id: 0, color: { r: 99, g: 56, b: 66 }, position: 0 },
+          { id: 1, color: { r: 82, g: 48, b: 66 }, position: 0.25 },
+          { id: 2, color: { r: 82, g: 48, b: 49 }, position: 0.5 },
+          { id: 3, color: { r: 82, g: 40, b: 49 }, position: 1 },
         ]
       },
       {
-        keyframe: 3000, // 1000 duration
+        keyframe: 500, // 1000 duration
         points: [
-          { id: 0, color: { r: 30, g: 0, b: 51 }, position: 0 },
-          { id: 1, color: { r: 30, g: 0, b: 51 }, position: 0.2 },
-          { id: 2, color: { r: 33, g: 0, b: 57 }, position: 0.4 },
-          { id: 3, color: { r: 44, g: 0, b: 75 }, position: 0.6 },
-          { id: 4, color: { r: 50, g: 0, b: 85 }, position: 0.8 },
-          { id: 5, color: { r: 52, g: 0, b: 89 }, position: 1 },
+          { id: 0, color: { r: 99, g: 56, b: 50 }, position: 0 },
+          { id: 1, color: { r: 82, g: 48, b: 25 }, position: 0.25 },
+          { id: 2, color: { r: 82, g: 48, b: 10 }, position: 0.5 },
+          { id: 3, color: { r: 82, g: 40, b: 0 }, position: 1 },
         ]
       },
       {
-        keyframe: 4500, // 1000 duration
+        keyframe: 1500, // 1000 duration
         points: [
-          { id: 0, color: { r: 73, g: 0, b: 125 }, position: 0 },
-          { id: 1, color: { r: 79, g: 0, b: 136 }, position: 0.2 },
-          { id: 2, color: { r: 96, g: 0, b: 164 }, position: 0.4 },
-          { id: 3, color: { r: 107, g: 0, b: 184 }, position: 0.6 },
-          { id: 4, color: { r: 118, g: 0, b: 203 }, position: 0.8 },
-          { id: 5, color: { r: 132, g: 0, b: 226 }, position: 1 },
+          { id: 0, color: { r: 82, g: 56, b: 50 }, position: 0 },
+          { id: 1, color: { r: 62, g: 48, b: 75 }, position: 0.25 },
+          { id: 2, color: { r: 62, g: 48, b: 100 }, position: 0.5 },
+          { id: 3, color: { r: 62, g: 40, b: 110}, position: 1 },
         ]
       },
     ], this.canvas, this.ctx);
