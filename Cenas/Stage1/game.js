@@ -267,7 +267,7 @@ class GameEngine {
           { id: 4, color: { r: 33, g: 148, b: 214 }, position: 0.6 },
           { id: 5, color: { r: 8, g: 132, b: 206 }, position: 1 },
         ]
-      },
+      },      
       {
         keyframe: 5500,
         points: [
@@ -278,7 +278,7 @@ class GameEngine {
           { id: 4, color: { r: 55, g: 0, b: 133 }, position: 0.81 },
           { id: 5, color: { r: 39, g: 0, b: 99 }, position: 1 },
         ]
-      },
+      },    
     ], this.canvas, this.ctx);
 
     this.cloudFall = new ParticleFall({
