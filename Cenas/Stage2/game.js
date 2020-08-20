@@ -268,7 +268,7 @@ class GameEngine {
         ]
       },
       {
-        keyframe: 4000, //duration
+        keyframe: 3000, //duration
         points: [
           { id: 0, color: { r: 69, g: 29, b: 175 }, position: 0 },
           { id: 1, color: { r: 69, g: 29, b: 175 }, position: 0.14 },
@@ -287,12 +287,12 @@ class GameEngine {
           { id: 0, color: { r: 18, g: 6, b: 67 }, position: 0 },
           { id: 1, color: { r: 3, g: 2, b: 33 }, position: 0.25 },
           { id: 2, color: { r: 0, g: 1, b: 11 }, position: 0.5 },
-          { id: 3, color: { r: 0, g: 0, b: 0 }, position: 1 },
-          { id: 4, color: { r: 0, g: 0, b: 0 }, position: 1 },
-          { id: 5, color: { r: 0, g: 0, b: 0 }, position: 1 },
-          { id: 6, color: { r: 0, g: 0, b: 0 }, position: 1 },
-          { id: 7, color: { r: 0, g: 0, b: 0 }, position: 1 },
-          { id: 8, color: { r: 0, g: 0, b: 0 }, position: 1 },
+          { id: 3, color: { r: 0, g: 0, b: 0 }, position: 1 },          
+          { id: 4, color: { r: 0, g: 0, b: 0 }, position: 1 },          
+          { id: 5, color: { r: 0, g: 0, b: 0 }, position: 1 },          
+          { id: 6, color: { r: 0, g: 0, b: 0 }, position: 1 },          
+          { id: 7, color: { r: 0, g: 0, b: 0 }, position: 1 },          
+          { id: 8, color: { r: 0, g: 0, b: 0 }, position: 1 },          
         ]
       },
     ], this.canvas, this.ctx);
