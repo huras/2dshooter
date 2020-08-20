@@ -262,29 +262,29 @@ class GameEngine {
           { id: 2, color: { r: 0, g: 0, b: 0 }, position: 0.4 },
           { id: 3, color: { r: 10, g: 0, b: 17 }, position: 0.6 },
           { id: 4, color: { r: 10, g: 0, b: 17 }, position: 0.8 },
-          { id: 5, color: { r: 22, g: 0, b: 37 }, position: 1 },
+          { id: 5, color: { r: 22, g: 0, b: 37 }, position: 1 },          
         ]
       },
       {
-        keyframe: 3000, // 1000 duration
+        keyframe: 2000, // 1000 duration
         points: [
           { id: 0, color: { r: 30, g: 0, b: 51 }, position: 0 },
           { id: 1, color: { r: 30, g: 0, b: 51 }, position: 0.2 },
           { id: 2, color: { r: 33, g: 0, b: 57 }, position: 0.4 },
           { id: 3, color: { r: 44, g: 0, b: 75 }, position: 0.6 },
           { id: 4, color: { r: 50, g: 0, b: 85 }, position: 0.8 },
-          { id: 5, color: { r: 52, g: 0, b: 89 }, position: 1 },
+          { id: 5, color: { r: 52, g: 0, b: 89 }, position: 1 },          
         ]
       },
       {
-        keyframe: 4500, // 1000 duration
+        keyframe: 4000, // 1000 duration
         points: [
           { id: 0, color: { r: 73, g: 0, b: 125 }, position: 0 },
           { id: 1, color: { r: 79, g: 0, b: 136 }, position: 0.2 },
           { id: 2, color: { r: 96, g: 0, b: 164 }, position: 0.4 },
           { id: 3, color: { r: 107, g: 0, b: 184 }, position: 0.6 },
           { id: 4, color: { r: 118, g: 0, b: 203 }, position: 0.8 },
-          { id: 5, color: { r: 132, g: 0, b: 226 }, position: 1 },
+          { id: 5, color: { r: 132, g: 0, b: 226 }, position: 1 },          
         ]
       },
     ], this.canvas, this.ctx);
