@@ -173,6 +173,14 @@ class TouchAnalogic {
       // else if (directionTouse.y < -analogicCircle.r)
       //   directionTouse.y = -analogicCircle.r
 
+      this.ctx.beginPath();
+      this.ctx.arc(this.circle.x, this.circle.y, this.circle.r * this.deadZonePercent, 0, 2 * Math.PI);
+      this.ctx.lineWidth = 1;
+      this.ctx.strokeStyle = "rgb(0,0,0, 0.2)";
+      this.ctx.stroke();
+      this.ctx.fillStyle = "rgb(0,0,0, 0.2)";
+      this.ctx.fill();
+
       if (this.personalizedImage && this.personalizedImage.image) {
         var fw = 2 * this.circle.r * (1 - this.deadZonePercent) * 3 / 4;
         var fh = 2 * this.circle.r * (1 - this.deadZonePercent) * 3 / 4;
@@ -190,13 +198,7 @@ class TouchAnalogic {
         this.ctx.fill();
       }
 
-      this.ctx.beginPath();
-      this.ctx.arc(this.circle.x, this.circle.y, this.circle.r * this.deadZonePercent, 0, 2 * Math.PI);
-      this.ctx.lineWidth = 1;
-      this.ctx.strokeStyle = "rgb(0,0,0, 0.2)";
-      this.ctx.stroke();
-      this.ctx.fillStyle = "rgb(0,0,0, 0.2)";
-      this.ctx.fill();
+
     } else {
       // this.ctx.beginPath();
       // this.ctx.arc(this.circle.x, this.circle.y, this.circle.r * this.deadZonePercent, 0, 2 * Math.PI);
@@ -771,17 +773,17 @@ class ObjectLayoutReader {
     this.objectPrefabs = options.objectPrefabs || [];
     this.mayRise = false;
     this.hasLoaded = false;
+    this.velocidade = options.velocidade || 3.5;
   }
 
   readChallenges() {
     this.layoutReader = new ShipLayoutReader();
-    this.layoutReader.load(this.layoutSrc, () => {
-      this.transformObjectsValues();
-      this.hasLoaded = this.layoutReader.hasLoaded;
-      if (this.challengePool.length > 0 && this.chooseNextChallenge) {
-        this.chooseNextChallenge();
-      }
-    });
+    this.layoutReader.load(this.layoutSrc);
+    this.transformObjectsValues();
+    this.hasLoaded = this.layoutReader.hasLoaded;
+    if (this.challengePool.length > 0 && this.chooseNextChallenge) {
+      this.chooseNextChallenge();
+    }
   }
 
   transformObjectsValues() {
@@ -858,7 +860,6 @@ class ObjectLayoutReader {
   }
 
   randomNextQuestion() {
-    // debugger;
     return this.randomNextStage(this.questionPool, 0);
   }
 
@@ -1084,7 +1085,7 @@ class ObjectLayoutReader {
     }
 
     if (this.mayRise == true) {
-      this.currentOffset.y += 3.5;
+      this.currentOffset.y += this.velocidade;
     }
   }
 
