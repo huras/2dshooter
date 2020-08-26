@@ -249,34 +249,46 @@ class GameEngine {
         firstFrame: true,
         keyframe: 0,
         points: [
-          { id: 0, color: { r: 132, g: 214, b: 255 }, position: 0 },
-          { id: 1, color: { r: 129, g: 213, b: 225 }, position: 0.16 },
-          { id: 2, color: { r: 115, g: 206, b: 255 }, position: 0.35 },
-          { id: 3, color: { r: 107, g: 198, b: 247 }, position: 0.58 },
-          { id: 4, color: { r: 97, g: 192, b: 247 }, position: 0.75 },
-          { id: 5, color: { r: 82, g: 181, b: 239 }, position: 1 },
+          { id: 0, color: { r: 255, g: 255, b: 255 }, position: 0 },
+          { id: 1, color: { r: 255, g: 255, b: 255 }, position: 0.4 },
+          { id: 2, color: { r: 120, g: 168, b: 218 }, position: 1 },
+          { id: 3, color: { r: 120, g: 168, b: 218 }, position: 1 },
         ]
       },
       {
-        keyframe: 3500,
+        keyframe: 200,
         points: [
-          { id: 0, color: { r: 68, g: 174, b: 239 }, position: 0 },
-          { id: 1, color: { r: 57, g: 165, b: 222 }, position: 0.06 },
-          { id: 2, color: { r: 54, g: 163, b: 222 }, position: 0.15 },
-          { id: 3, color: { r: 41, g: 156, b: 222 }, position: 0.48 },
-          { id: 4, color: { r: 33, g: 148, b: 214 }, position: 0.6 },
-          { id: 5, color: { r: 8, g: 132, b: 206 }, position: 1 },
+          { id: 0, color: { r: 255, g: 255, b: 255 }, position: 0 },
+          { id: 1, color: { r: 120, g: 168, b: 218 }, position: 0.5 },
+          { id: 2, color: { r: 120, g: 168, b: 218 }, position: 0.95 },
+          { id: 3, color: { r: 249, g: 230, b: 167 }, position: 1 },
         ]
       },      
       {
-        keyframe: 5500,
+        keyframe: 500,
         points: [
-          { id: 0, color: { r: 122, g: 63, b: 189 }, position: 0 },
-          { id: 1, color: { r: 122, g: 63, b: 189 }, position: 0.07 },
-          { id: 2, color: { r: 75, g: 0, b: 175 }, position: 0.14 },
-          { id: 3, color: { r: 68, g: 0, b: 163 }, position: 0.48 },
-          { id: 4, color: { r: 55, g: 0, b: 133 }, position: 0.81 },
-          { id: 5, color: { r: 39, g: 0, b: 99 }, position: 1 },
+          { id: 0, color: { r: 120, g: 218, b: 218 }, position: 0 },
+          { id: 1, color: { r: 120, g: 218, b: 218 }, position: 0.4 },
+          { id: 2, color: { r: 120, g: 168, b: 218 }, position: 0.95 },
+          { id: 3, color: { r: 249, g: 230, b: 167 }, position: 1 },
+        ]
+      },
+      {
+        keyframe: 2500,
+        points: [
+          { id: 0, color: { r: 120, g: 168, b: 218 }, position: 0 },
+          { id: 1, color: { r: 249, g: 230, b: 167 }, position: 0.4 },
+          { id: 2, color: { r: 249, g: 230, b: 167 }, position: 0.8 },
+          { id: 3, color: { r: 238, g: 150, b: 126 }, position: 1 },
+        ]
+      },
+      {
+        keyframe: 10000,
+        points: [
+          { id: 0, color: { r: 255, g: 255, b: 255 }, position: 0 },
+          { id: 1, color: { r: 249, g: 230, b: 167 }, position: 0.24 },
+          { id: 2, color: { r: 238, g: 150, b: 126 }, position: 0.8 },
+          { id: 3, color: { r: 238, g: 150, b: 126 }, position: 1 },
         ]
       },    
     ], this.canvas, this.ctx);
