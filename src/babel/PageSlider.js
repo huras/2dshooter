@@ -1,24 +1,24 @@
+"use strict";
+
 var currentPage = 0;
-var historico = [
-  // {
-  //   url: './Cenas/Stage1',
-  //   rotation: "portrait-primary",
-  //   // type: 'animation'
-  // }
+var historico = [// {
+//   url: './Cenas/Stage1',
+//   rotation: "portrait-primary",
+//   // type: 'animation'
+// }
+{
+  url: './Cenas/Menu/index.html',
+  rotation: "portrait-primary" // type: 'animation'
 
-  {
-    url: './Cenas/Menu/index.html',
-    rotation: "portrait-primary",
-    // type: 'animation'
-  }
-];
-
+}];
 var loadedData = {
-  crystals: 0,
-}
+  crystals: 0
+}; // Gerencia histórico
 
-// Gerencia histórico
-var loadNewScene = (url, rotation, currEngine = undefined, type = undefined,) => {
+var loadNewScene = function loadNewScene(url, rotation) {
+  var currEngine = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
+  var type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;
+
   if (currEngine) {
     if (currEngine.crystalCounter) {
       loadedData.crystals += currEngine.crystalCounter.counter;
@@ -28,29 +28,25 @@ var loadNewScene = (url, rotation, currEngine = undefined, type = undefined,) =>
   historico.push({
     url: url,
     rotation: rotation,
-    type: type,
-  })
+    type: type
+  });
   nextPage();
-}
+}; // ======================================
 
-// ======================================
+
 function randomHead() {
-  let heads = [
-    document.getElementById('brenda-head'),
-    document.getElementById('zeca-head'),
-    document.getElementById('lucia-head'),
-  ];
-  heads.map(head => {
+  var heads = [document.getElementById('brenda-head'), document.getElementById('zeca-head'), document.getElementById('lucia-head')];
+  heads.map(function (head) {
     head.style.display = 'none';
-  })
-  var headToShowIdx = Math.floor(randomInt(0, (heads.length) * 2) / 2);
+  });
+  var headToShowIdx = Math.floor(randomInt(0, heads.length * 2) / 2);
   heads[headToShowIdx].style.display = 'flex';
 }
+
 randomHead();
 
 function gotoCurrentPage() {
   randomHead();
-
   var iframe = document.querySelector('iframe');
   iframe.src = historico[currentPage].url;
   document.getElementById('page-counter').innerHTML = 'Página ' + (currentPage + 1) + ' de ' + historico.length;
@@ -74,27 +70,28 @@ function gotoCurrentPage() {
 
   try {
     checkCorrectRotation();
-  } catch (error) {
-
-  }
+  } catch (error) {}
 }
 
 var miframe = undefined;
 var engine = undefined;
+
 function attachFunctionsToCurrentIframe() {
   var iframe = document.querySelector('iframe');
   miframe = iframe;
-  engine = () => {
-    return miframe.contentWindow.engine || null;
-  }
-  engine = engine();
 
+  engine = function engine() {
+    return miframe.contentWindow.engine || null;
+  };
+
+  engine = engine();
   iframe.contentWindow.loadedData = loadedData;
-  if (miframe.contentWindow.loadPreviousStageData)
-    miframe.contentWindow.loadPreviousStageData();
-  iframe.contentWindow.loadNewScene = (url, rotation, type = undefined) => {
+  if (miframe.contentWindow.loadPreviousStageData) miframe.contentWindow.loadPreviousStageData();
+
+  iframe.contentWindow.loadNewScene = function (url, rotation) {
+    var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
     loadNewScene(url, rotation, type);
-  }
+  };
 
   iframe.contentWindow.forcedOrientation = historico[currentPage].rotation; // Força rotação da nova tela
 }
