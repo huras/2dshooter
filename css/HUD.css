@@ -3,6 +3,9 @@ iframe{
   min-width: 100%;
   min-height: 100%;
 }
+body{
+  text-transform: uppercase;
+}
 .interactableHUD {
   display: flex;
   justify-content: space-between;
